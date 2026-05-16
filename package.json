@@ -13,6 +13,8 @@
     "api:db:seed": "npm run db:seed -w apps/api",
     "mobile:start": "npm run start -w apps/mobile",
     "admin:dev": "npm run dev -w apps/admin",
+    "admin:vercel:link": "vercel link --cwd apps/admin",
+    "admin:vercel": "vercel --cwd apps/admin",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down"
   },

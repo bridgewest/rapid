@@ -51,7 +51,7 @@ npm run admin:vercel:link
 npm run admin:vercel
 ```
 
-During `vercel link`, pick your team and project (e.g. `dukorpay`). Set **`VITE_API_URL`** in the Vercel project settings to your API base URL. For **Git-connected** projects, set **Root Directory** to `apps/admin` in the Vercel dashboard so pushes to `main` redeploy automatically.
+During `vercel link`, pick your team (e.g. **taylorneilson-projects**, per `vercel teams ls`) and project (e.g. `dukorpay`). Set **`VITE_API_URL`** in the Vercel project settings to your API base URL. For **Git-connected** deploys, set **Root Directory** to `apps/admin` so pushes to `main` trigger production builds. Always run CLI commands from **`~/Documents/dukorpay`**, not from `~`.
 
 ## Product phases (schema)
 

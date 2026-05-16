@@ -8,6 +8,7 @@ build
 .env.*
 !.env.example
 .dukorpay.git/
+.vercel
 
 .DS_Store
 coverage
