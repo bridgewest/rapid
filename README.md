@@ -53,7 +53,18 @@ npm run admin:vercel
 
 During `vercel link`, pick your team and project (e.g. `dukorpay`). Set **`VITE_API_URL`** in the Vercel project settings to your API base URL.
 
-**Git-connected deploys:** Use **Root Directory** either `.` (repo root; uses root `vercel.json` and `apps/admin/dist`) or `apps/admin` (uses `apps/admin/vercel.json`, which runs `npm install` from the monorepo root). Either way, pushes to **`main`** should trigger a new Production build—if the live site still shows old copy, the last deploy failed or Git was not connected; check the **Deployments** tab in Vercel.
+**Git-connected deploys:** Use **Root Directory** either `.` (repo root; uses root `vercel.json` and `apps/admin/dist`) or `apps/admin` (uses `apps/admin/vercel.json`, which runs `npm ci` from the monorepo root). Either way, pushes to **`main`** should trigger a new Production build—if the live site still shows old copy, the last deploy failed or Git was not connected; check the **Deployments** tab in Vercel.
+
+### If production still looks old (stale bundle)
+
+Quick check: the browser tab title should be **DukorPay — Operations Console** (see [apps/admin/index.html](apps/admin/index.html)). If you still see **DukorPay Admin** or markdown text like “Wire your admin JWT”, Production is an old deploy.
+
+1. **Vercel → Project → Settings → Domains** — confirm `dukorpay.vercel.app` is attached to this project (not another team/project).
+2. **Settings → Git** — connect **bridgewest/dukorpay**, production branch **main**.
+3. **Settings → General → Root Directory** — set to **`.`** *or* **`apps/admin`** to match one of the `vercel.json` layouts above. Do not leave a third path.
+4. **Settings → General → Build & Development Settings** — if **Override** is enabled for Install, Build, or Output Directory, either align them with the chosen `vercel.json` or **turn overrides off** so the repo config is used.
+5. **Deployments** — open the latest **Production** row: confirm it shows a recent **Git** commit (not only “Redeploy” of an old CLI build). Open the build log and fix errors until exit code **0**.
+6. After a good deploy, **View page source** and look for `<meta name="dukorpay-build" content="…">` — it should match the short Git SHA of that deployment. The sidebar also shows **Build** with the same id.
 
 ## Product phases (schema)
 

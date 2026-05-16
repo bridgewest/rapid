@@ -143,6 +143,9 @@ export function Layout() {
           </nav>
           <div className="app-sidebar__footer">
             <p className="app-sidebar__fineprint">Authorized personnel only. Activity is logged.</p>
+            <p className="app-build-stamp" title="Git commit on Vercel (first 7 chars) or local">
+              Build {__APP_BUILD_ID__}
+            </p>
           </div>
         </aside>
         <main className="app-main">
