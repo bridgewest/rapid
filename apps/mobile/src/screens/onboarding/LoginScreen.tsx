@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   btnDisabled: { opacity: 0.6 },
-  btnText: { color: colors.bg, fontWeight: "700", fontSize: 17 },
+  btnText: { color: colors.onAccent, fontWeight: "700", fontSize: 17 },
   link: { color: colors.accent, textAlign: "center" },
 });

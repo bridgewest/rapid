@@ -34,5 +34,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
   },
-  btnText: { color: colors.text, fontWeight: "700" },
+  btnText: { color: colors.onDanger, fontWeight: "700" },
 });

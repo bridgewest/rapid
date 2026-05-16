@@ -55,5 +55,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 12,
   },
-  btnText: { color: colors.bg, fontWeight: "700", fontSize: 17 },
+  btnText: { color: colors.onAccent, fontWeight: "700", fontSize: 17 },
 });

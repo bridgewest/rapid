@@ -68,7 +68,11 @@ export function MainTabNavigator() {
       screenOptions={{
         headerStyle: { backgroundColor: colors.bg },
         headerTintColor: colors.text,
-        tabBarStyle: { backgroundColor: colors.card, borderTopColor: colors.border },
+        tabBarStyle: {
+          backgroundColor: colors.tabBar,
+          borderTopColor: colors.tabBarBorder,
+          paddingTop: 6,
+        },
         tabBarActiveTintColor: colors.accent,
         tabBarInactiveTintColor: colors.textMuted,
       }}

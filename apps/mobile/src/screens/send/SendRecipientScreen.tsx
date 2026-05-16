@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 8,
   },
-  btnText: { color: colors.bg, fontWeight: "700" },
+  btnText: { color: colors.onAccent, fontWeight: "700" },
   row: {
     padding: 16,
     backgroundColor: colors.card,
