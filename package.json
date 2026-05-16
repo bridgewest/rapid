@@ -1,0 +1,22 @@
+{
+  "name": "dukorpay",
+  "private": true,
+  "workspaces": [
+    "apps/api",
+    "apps/mobile",
+    "apps/admin"
+  ],
+  "scripts": {
+    "api:dev": "npm run dev -w apps/api",
+    "api:db:generate": "npm run db:generate -w apps/api",
+    "api:db:migrate": "npm run db:migrate -w apps/api",
+    "api:db:seed": "npm run db:seed -w apps/api",
+    "mobile:start": "npm run start -w apps/mobile",
+    "admin:dev": "npm run dev -w apps/admin",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "DukorPay",
+    "slug": "dukorpay",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "scheme": "dukorpay",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.dukorpay.app"
+    },
+    "android": {
+      "package": "com.dukorpay.app"
+    },
+    "extra": {
+      "apiUrl": "http://localhost:4000"
+    }
+  }
+}

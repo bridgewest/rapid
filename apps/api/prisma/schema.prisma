@@ -1,0 +1,372 @@
+// DukorPay — extensible schema for Phases 1–5
+// Phase 1: REMITTANCE | Phase 2: AIRTIME | Phase 3: BILL_PAY | Phase 4: PARTNER_ORDER | Phase 5: SAVINGS
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserTier {
+  UNVERIFIED
+  KYC_VERIFIED
+  VIP
+}
+
+enum KycStatus {
+  NOT_STARTED
+  PENDING
+  APPROVED
+  REJECTED
+  NEEDS_REVIEW
+}
+
+enum TransactionKind {
+  REMITTANCE
+  AIRTIME
+  BILL_PAY
+  COMBO
+  PARTNER_ORDER
+  SAVINGS_DEPOSIT
+  SAVINGS_WITHDRAWAL
+}
+
+enum TransactionStatus {
+  DRAFT
+  INITIATED
+  PROCESSING
+  DELIVERED
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum RecipientType {
+  PERSON
+  BUSINESS
+}
+
+enum BillCategory {
+  ELECTRICITY
+  WATER
+  CABLE_TV
+  OTHER
+}
+
+enum AmlSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  BLOCK
+}
+
+enum SanctionsResult {
+  CLEAR
+  PENDING_REVIEW
+  MATCH
+}
+
+enum ProductPhase {
+  PHASE_1
+  PHASE_2
+  PHASE_3
+  PHASE_4
+  PHASE_5
+}
+
+model User {
+  id                  String    @id @default(cuid())
+  phoneE164           String    @unique
+  email               String    @unique
+  passwordHash        String
+  tier                UserTier  @default(UNVERIFIED)
+  kycStatus           KycStatus @default(NOT_STARTED)
+  dailySendUsdCents   Int       @default(0)
+  monthlySendUsdCents Int       @default(0)
+  referrerCode        String?   @unique
+  referredByUserId    String?
+  referredBy          User?     @relation("Referrals", fields: [referredByUserId], references: [id])
+  referrals           User[]    @relation("Referrals")
+
+  profile          UserProfile?
+  kycSubmissions   KycSubmission[]
+  recipients       Recipient[]
+  wallet           Wallet?
+  transactions     Transaction[] @relation("UserTransactions")
+  initiatedComboAs Transaction[] @relation("ComboInitiator")
+  mfaFactors       MfaFactor[]
+  devices          UserDevice[]
+  auditLogs        AuditLog[]
+  amlFlags         AmlFlag[]
+  referralRewards  ReferralReward[]
+  adminProfile     AdminProfile?
+  sessions         Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserProfile {
+  id             String    @id @default(cuid())
+  userId         String    @unique
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName      String?
+  lastName       String?
+  displayName    String?
+  country        String    @default("US")
+  addressLine1   String?
+  addressLine2   String?
+  city           String?
+  state          String?
+  postalCode     String?
+  dateOfBirth    DateTime?
+
+  dailyLimitUsdCents   Int @default(50000)
+  monthlyLimitUsdCents Int @default(300000)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model KycSubmission {
+  id                 String    @id @default(cuid())
+  userId             String
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status             KycStatus @default(PENDING)
+  provider           String    @default("persona")
+  providerInquiryId  String?
+  idDocumentUrl      String?
+  selfieUrl          String?
+  proofOfAddressUrl  String?
+  reviewerNotes      String?
+  decidedAt          DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MfaFactor {
+  id         String     @id @default(cuid())
+  userId     String
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channel    MfaFactorChannel
+  verified   Boolean    @default(false)
+  secret     String?
+  phoneHash  String?
+  lastUsedAt DateTime?
+
+  createdAt DateTime @default(now())
+}
+
+enum MfaFactorChannel {
+  SMS
+  BIOMETRIC
+}
+
+model UserDevice {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fcmToken          String?
+  deviceFingerprint String?
+  platform          String?
+  lastIp            String?
+  userAgent         String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Session {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  refreshHash String
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Recipient {
+  id          String        @id @default(cuid())
+  ownerId     String
+  owner       User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  type        RecipientType @default(PERSON)
+  name        String
+  phoneE164   String
+  country     String        @default("LR")
+  nickname    String?
+  carrierHint String?
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  transactions Transaction[]
+
+  @@index([ownerId, phoneE164])
+}
+
+model Wallet {
+  id                String  @id @default(cuid())
+  userId            String  @unique
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  availableUsdCents Int     @default(0)
+  pendingUsdCents   Int     @default(0)
+  provider          String? @default("stripe_treasury")
+  externalAccountId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ExchangeRate {
+  id               String   @id @default(cuid())
+  base             String   @default("USD")
+  quote            String   @default("LRD")
+  rate             Decimal  @db.Decimal(18, 8)
+  source           String
+  isManualOverride Boolean  @default(false)
+  validUntil       DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([base, quote, createdAt])
+}
+
+model Transaction {
+  id                 String            @id @default(cuid())
+  publicId           String            @unique @default(cuid())
+
+  userId             String
+  user               User              @relation("UserTransactions", fields: [userId], references: [id])
+
+  kind  TransactionKind
+  phase ProductPhase
+
+  transactionGroupId String?
+  legIndex           Int               @default(0)
+
+  status TransactionStatus @default(INITIATED)
+
+  sendAmountUsdCents    Int
+  receiveAmountLrdCents Int?
+  fxRateUsed            Decimal? @db.Decimal(18, 8)
+
+  feePercentApplied    Decimal? @db.Decimal(5, 2)
+  feeFlatUsdCents      Int      @default(0)
+  feeTotalUsdCents     Int      @default(0)
+  marginPercentAirtime Decimal? @db.Decimal(5, 2)
+
+  recipientId String?
+  recipient   Recipient? @relation(fields: [recipientId], references: [id])
+
+  provider           String?
+  providerReference  String?
+  idempotencyKey     String? @unique
+
+  ipAddress         String?
+  deviceFingerprint String?
+  sanctionsResult   SanctionsResult @default(CLEAR)
+  sanctionsPayload  Json?
+
+  metadata Json?
+
+  events   TransactionEvent[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  comboInitiatorId String?
+  comboInitiator   User?    @relation("ComboInitiator", fields: [comboInitiatorId], references: [id])
+
+  parentTransactionId String?
+  parentTransaction   Transaction?  @relation("TransactionLegs", fields: [parentTransactionId], references: [id])
+  childTransactions   Transaction[] @relation("TransactionLegs")
+
+  @@index([userId, createdAt])
+  @@index([parentTransactionId])
+  @@index([transactionGroupId])
+  @@index([status])
+}
+
+model TransactionEvent {
+  id            String            @id @default(cuid())
+  transactionId String
+  transaction   Transaction       @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  status        TransactionStatus
+  note          String?
+  payload       Json?
+  createdAt     DateTime          @default(now())
+
+  @@index([transactionId])
+}
+
+model ReferralReward {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amountUsdCents Int      @default(500)
+  credited       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+}
+
+model AmlFlag {
+  id             String      @id @default(cuid())
+  userId         String?
+  user           User?       @relation(fields: [userId], references: [id])
+  transactionId  String?
+  severity       AmlSeverity
+  reason         String
+  amountUsdCents Int?
+  resolved       Boolean     @default(false)
+  resolvedBy     String?
+  resolvedAt     DateTime?
+  createdAt      DateTime    @default(now())
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  action     String
+  resource   String?
+  resourceId String?
+  ip         String?
+  deviceFp   String?
+  payload    Json?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model AdminProfile {
+  id        String   @id @default(cuid())
+  userId  String   @unique
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role    String   @default("support")
+  createdAt DateTime @default(now())
+}
+
+model BillPayQuote {
+  id             String       @id @default(cuid())
+  category       BillCategory
+  operatorId     String?
+  accountNumber  String
+  amountUsdCents Int
+  quoteJson      Json
+  expiresAt      DateTime
+  createdAt      DateTime     @default(now())
+}
+
+model PartnerMerchant {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  active    Boolean  @default(true)
+  metadata  Json?
+  createdAt DateTime @default(now())
+}
