@@ -51,7 +51,9 @@ npm run admin:vercel:link
 npm run admin:vercel
 ```
 
-During `vercel link`, pick your team (e.g. **taylorneilson-projects**, per `vercel teams ls`) and project (e.g. `dukorpay`). Set **`VITE_API_URL`** in the Vercel project settings to your API base URL. For **Git-connected** deploys, set **Root Directory** to `apps/admin` so pushes to `main` trigger production builds. Always run CLI commands from **`~/Documents/dukorpay`**, not from `~`.
+During `vercel link`, pick your team and project (e.g. `dukorpay`). Set **`VITE_API_URL`** in the Vercel project settings to your API base URL.
+
+**Git-connected deploys:** Use **Root Directory** either `.` (repo root; uses root `vercel.json` and `apps/admin/dist`) or `apps/admin` (uses `apps/admin/vercel.json`, which runs `npm install` from the monorepo root). Either way, pushes to **`main`** should trigger a new Production build—if the live site still shows old copy, the last deploy failed or Git was not connected; check the **Deployments** tab in Vercel.
 
 ## Product phases (schema)
 

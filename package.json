@@ -16,7 +16,8 @@
     "admin:vercel:link": "vercel link --cwd apps/admin",
     "admin:vercel": "vercel --cwd apps/admin",
     "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down"
+    "docker:down": "docker compose down",
+    "build": "npm run build -w apps/admin"
   },
   "engines": {
     "node": ">=20"
