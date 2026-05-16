@@ -2,15 +2,15 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ActivityIndicator, View } from "react-native";
-import { AuthProvider, useAuth } from "./context/AuthContext";
-import { MainTabNavigator } from "./navigation/MainTabNavigator";
-import { WelcomeScreen } from "./screens/onboarding/WelcomeScreen";
-import { RegisterScreen } from "./screens/onboarding/RegisterScreen";
-import { LoginScreen } from "./screens/onboarding/LoginScreen";
-import { OtpScreen } from "./screens/onboarding/OtpScreen";
-import { KycIntroScreen } from "./screens/onboarding/KycIntroScreen";
-import { ProfileSetupScreen } from "./screens/onboarding/ProfileSetupScreen";
-import { colors } from "./theme";
+import { AuthProvider, useAuth } from "../context/AuthContext";
+import { MainTabNavigator } from "./MainTabNavigator";
+import { WelcomeScreen } from "../screens/onboarding/WelcomeScreen";
+import { RegisterScreen } from "../screens/onboarding/RegisterScreen";
+import { LoginScreen } from "../screens/onboarding/LoginScreen";
+import { OtpScreen } from "../screens/onboarding/OtpScreen";
+import { KycIntroScreen } from "../screens/onboarding/KycIntroScreen";
+import { ProfileSetupScreen } from "../screens/onboarding/ProfileSetupScreen";
+import { colors } from "../theme";
 
 export type AuthStackParamList = {
   Welcome: undefined;
