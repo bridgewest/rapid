@@ -82,6 +82,7 @@ model User {
   phoneE164           String    @unique
   email               String    @unique
   passwordHash        String
+  supabaseUserId      String?   @unique
   tier                UserTier  @default(UNVERIFIED)
   kycStatus           KycStatus @default(NOT_STARTED)
   dailySendUsdCents   Int       @default(0)

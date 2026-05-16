@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { prisma } from "../src/lib/prisma.js";
 import bcrypt from "bcryptjs";
+import { getSupabaseAdmin, isSupabaseAuthConfigured } from "../src/lib/supabase.js";
 
 async function main() {
   const count = await prisma.exchangeRate.count({ where: { base: "USD", quote: "LRD" } });
@@ -34,6 +35,35 @@ async function main() {
       },
     });
     console.log("Seeded admin:", adminEmail);
+  }
+
+  if (isSupabaseAuthConfigured()) {
+    const admin = getSupabaseAdmin();
+    const pwd = process.env.SEED_ADMIN_PASSWORD ?? "admin-admin-admin";
+    if (admin) {
+      const row = await prisma.user.findUnique({ where: { email: adminEmail } });
+      if (row && !row.supabaseUserId) {
+        const { data: created, error: createErr } = await admin.auth.admin.createUser({
+          email: adminEmail,
+          password: pwd,
+          email_confirm: true,
+        });
+        let supabaseId = created.user?.id;
+        if (createErr && !supabaseId) {
+          const { data: list } = await admin.auth.admin.listUsers({ page: 1, perPage: 1000 });
+          supabaseId = list?.users?.find((u) => u.email === adminEmail)?.id;
+        }
+        if (supabaseId) {
+          await prisma.user.update({
+            where: { email: adminEmail },
+            data: { supabaseUserId: supabaseId },
+          });
+          console.log("Linked seed admin to Supabase Auth:", adminEmail);
+        } else if (createErr) {
+          console.warn("Supabase Auth link skipped:", createErr.message);
+        }
+      }
+    }
   }
 }
 

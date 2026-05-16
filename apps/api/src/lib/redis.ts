@@ -1,12 +1,12 @@
-import IORedis from "ioredis";
+import { Redis } from "ioredis";
 
-let client: IORedis | null = null;
+let client: Redis | null = null;
 
-export function getRedis(): IORedis | null {
+export function getRedis(): Redis | null {
   const url = process.env.REDIS_URL;
   if (!url) return null;
   if (!client) {
-    client = new IORedis(url, { maxRetriesPerRequest: 2, lazyConnect: true });
+    client = new Redis(url, { maxRetriesPerRequest: 2, lazyConnect: true });
   }
   return client;
 }

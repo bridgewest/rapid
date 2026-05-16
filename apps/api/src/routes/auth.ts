@@ -4,6 +4,7 @@ import { z } from "zod";
 import { prisma } from "../lib/prisma.js";
 import { signAccessToken } from "../middleware/auth.js";
 import { customAlphabet } from "nanoid";
+import { getSupabaseAdmin, getSupabaseAnon, isSupabaseAuthConfigured } from "../lib/supabase.js";
 
 const router = Router();
 const nanoidCode = customAlphabet("ABCDEFGHJKLMNPQRSTUVWXYZ23456789", 8);
@@ -14,6 +15,14 @@ const registerSchema = z.object({
   password: z.string().min(8),
   referralCode: z.string().optional(),
 });
+
+async function issueSupabaseSession(email: string, password: string) {
+  const anon = getSupabaseAnon();
+  if (!anon) return null;
+  const { data, error } = await anon.auth.signInWithPassword({ email, password });
+  if (error || !data.session?.access_token) return null;
+  return data.session.access_token;
+}
 
 router.post("/register", async (req, res, next) => {
   try {
@@ -45,6 +54,45 @@ router.post("/register", async (req, res, next) => {
       },
     });
 
+    if (isSupabaseAuthConfigured()) {
+      const admin = getSupabaseAdmin();
+      if (!admin) {
+        await prisma.user.delete({ where: { id: user.id } });
+        return res.status(500).json({ error: "Supabase is not configured correctly" });
+      }
+      const { data: sbData, error: sbErr } = await admin.auth.admin.createUser({
+        email: body.email,
+        password: body.password,
+        email_confirm: true,
+      });
+      if (sbErr || !sbData.user?.id) {
+        await prisma.user.delete({ where: { id: user.id } });
+        const msg = sbErr?.message ?? "Could not create auth user";
+        return res.status(400).json({ error: msg });
+      }
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { supabaseUserId: sbData.user.id },
+      });
+
+      const accessToken = await issueSupabaseSession(body.email, body.password);
+      if (!accessToken) {
+        await admin.auth.admin.deleteUser(sbData.user.id);
+        await prisma.user.delete({ where: { id: user.id } });
+        return res.status(500).json({ error: "Could not establish Supabase session" });
+      }
+
+      return res.status(201).json({
+        accessToken,
+        user: {
+          id: user.id,
+          phoneE164: user.phoneE164,
+          email: user.email,
+          kycStatus: user.kycStatus,
+        },
+      });
+    }
+
     const token = signAccessToken(user.id, user.email);
     return res.status(201).json({
       accessToken: token,
@@ -63,6 +111,39 @@ const loginSchema = z.object({
 router.post("/login", async (req, res, next) => {
   try {
     const body = loginSchema.parse(req.body);
+
+    if (isSupabaseAuthConfigured()) {
+      const accessToken = await issueSupabaseSession(body.email, body.password);
+      if (!accessToken) return res.status(401).json({ error: "Invalid credentials" });
+      const admin = getSupabaseAdmin()!;
+      const { data: sbUser } = await admin.auth.getUser(accessToken);
+      if (!sbUser.user?.id) return res.status(401).json({ error: "Invalid credentials" });
+
+      let user = await prisma.user.findFirst({
+        where: { supabaseUserId: sbUser.user.id },
+      });
+      if (!user) {
+        user = await prisma.user.findUnique({ where: { email: body.email } });
+        if (user) {
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { supabaseUserId: sbUser.user.id },
+          });
+        }
+      }
+      if (!user) return res.status(401).json({ error: "Invalid credentials" });
+
+      return res.json({
+        accessToken,
+        user: {
+          id: user.id,
+          phoneE164: user.phoneE164,
+          email: user.email,
+          kycStatus: user.kycStatus,
+        },
+      });
+    }
+
     const user = await prisma.user.findUnique({ where: { email: body.email } });
     if (!user) return res.status(401).json({ error: "Invalid credentials" });
     const ok = await bcrypt.compare(body.password, user.passwordHash);

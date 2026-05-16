@@ -8,7 +8,7 @@ Mobile-first remittance super-app: **U.S. → Liberia** corridor. Monorepo with 
 
 | Package | Description |
 |--------|-------------|
-| `apps/api` | Express REST API, Prisma schema (Phases 1–5), compliance stubs |
+| `apps/api` | Express REST API, Prisma schema (Phases 1–5), optional **Supabase** Postgres + Auth, compliance stubs |
 | `apps/mobile` | Expo app — onboarding → send money → airtime → tabs |
 | `apps/admin` | Vite/React operations dashboard |
 
@@ -16,6 +16,19 @@ Mobile-first remittance super-app: **U.S. → Liberia** corridor. Monorepo with 
 
 - Node 20+
 - Docker (for local Postgres + Redis) — optional if you use your own DB
+
+## Supabase (hosted Postgres + Auth)
+
+The API uses **Prisma** against any Postgres. Point `DATABASE_URL` at your Supabase database (pooler URL is fine for the Node server). Optionally enable **Supabase Auth** so `/auth/register` and `/auth/login` issue **Supabase access tokens**; `requireAuth` accepts those JWTs when `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` are all set in [apps/api/.env.example](apps/api/.env.example). If they are unset, the API keeps the previous **HS256** `JWT_SECRET` behavior for local development.
+
+1. Create a project at [supabase.com](https://supabase.com/dashboard).
+2. **Settings → Database** — copy the Postgres URI. Prefer the **connection pooler** string for `DATABASE_URL` in production.
+3. **Settings → API** — copy **Project URL**, **anon public**, and **service_role** (server-only; never ship to the mobile app or admin static bundle).
+4. Paste into `apps/api/.env` (see `.env.example`).
+5. From `apps/api`, run **`npx prisma db push`** (or `prisma migrate deploy`) against that database so the `User.supabaseUserId` column and rest of the schema exist.
+6. **`npm run db:seed -w apps/api`** — seeds the admin user and, when Supabase env is present, links them to **Supabase Auth**.
+
+**Security:** do not expose `SUPABASE_SERVICE_ROLE_KEY` to clients. If you turn on **Row Level Security** for tables exposed through Supabase Data API, add policies explicitly; this Express API connects as the database role from `DATABASE_URL` and does not use PostgREST for app queries.
 
 ## Quick start
 
@@ -85,7 +98,7 @@ Quick check: the browser tab title should be **DukorPay — Operations Console**
 
 ## API highlights
 
-- `POST /auth/register` | `POST /auth/login` | `POST /auth/verify-otp` (dev code `123456`)  
+- `POST /auth/register` | `POST /auth/login` | `POST /auth/verify-otp` (dev code `123456`) — with Supabase env set, responses use **Supabase access tokens**; otherwise legacy JWT from `JWT_SECRET`  
 - `GET /quotes/remittance` | `GET /quotes/airtime`  
 - `POST /transactions/remittance` | `airtime` | `combo`  
 - `GET /admin/*` — requires `AdminProfile` on user  
