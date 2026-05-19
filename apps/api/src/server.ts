@@ -5,5 +5,5 @@ const port = Number(process.env.PORT ?? 4000);
 const app = createApp();
 
 app.listen(port, () => {
-  console.log(`DukorPay API listening on :${port}`);
+  console.log(`Rapid API listening on :${port}`);
 });

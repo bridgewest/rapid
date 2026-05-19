@@ -1,18 +1,18 @@
 {
   "expo": {
-    "name": "DukorPay",
-    "slug": "dukorpay",
+    "name": "Rapid",
+    "slug": "rapid",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
-    "scheme": "dukorpay",
+    "scheme": "rapid",
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.dukorpay.app"
+      "bundleIdentifier": "com.rapid.app"
     },
     "android": {
-      "package": "com.dukorpay.app"
+      "package": "com.rapid.app"
     },
     "web": {
       "bundler": "metro"

@@ -1,6 +1,6 @@
-# DukorPay
+# Rapid
 
-**Project root (canonical):** `~/Documents/dukorpay`
+**Project root (canonical):** `~/Documents/rapid`
 
 Mobile-first remittance super-app: **U.S. → Liberia** corridor. Monorepo with **React Native (Expo)**, **Node/Express API**, **PostgreSQL**, **React admin**, and hooks for **Reloadly**, **BaaS**, and **KYC** vendors.
 
@@ -33,7 +33,7 @@ The API uses **Prisma** against any Postgres. Point `DATABASE_URL` at your Supab
 ## Quick start
 
 ```bash
-cd ~/Documents/dukorpay
+cd ~/Documents/rapid
 docker compose up -d
 npm install
 cp apps/api/.env.example apps/api/.env
@@ -51,40 +51,40 @@ cd apps/mobile && npm install && npx expo start
 
 ```bash
 cd apps/admin && npm install && npm run dev
-# Login as API user with AdminProfile — paste JWT in localStorage key dukorpay_admin_token
+# Login as API user with AdminProfile — paste JWT in localStorage key rapid_admin_token
 ```
 
 **Deploy admin to Vercel (CLI, from repo root):**
 
 ```bash
-cd ~/Documents/dukorpay
+cd ~/Documents/rapid
 vercel login
 vercel teams ls
 npm run admin:vercel:link
 npm run admin:vercel
 ```
 
-During `vercel link`, pick your team and project (e.g. `dukorpay`). Set **`VITE_API_URL`** in the Vercel project settings to your API base URL.
+During `vercel link`, pick your team and project (e.g. `rapid`). Set **`VITE_API_URL`** in the Vercel project settings to your API base URL.
 
 **Git-connected deploys:** Use **Root Directory** either `.` (repo root; uses root `vercel.json` and `apps/admin/dist`) or `apps/admin` (uses `apps/admin/vercel.json`, which runs `npm ci` from the monorepo root). Either way, pushes to **`main`** should trigger a new Production build—if the live site still shows old copy, the last deploy failed or Git was not connected; check the **Deployments** tab in Vercel.
 
 ### If Vercel shows no new deployment after `git push`
 
-1. **Git** — In Vercel → **Settings → Git**, confirm the repo is **bridgewest/dukorpay** and the **Production branch** is `main`. Re-connect GitHub if the integration was revoked.
+1. **Git** — In Vercel → **Settings → Git**, confirm the repo is **bridgewest/rapid** and the **Production branch** is `main`. Re-connect GitHub if the integration was revoked.
 2. **Monorepo “skip”** — Vercel can [skip builds for unchanged workspace apps](https://vercel.com/docs/monorepos#skipping-unaffected-projects). If you expect **every** push to redeploy the admin app (even when only `apps/mobile` or `apps/api` changed), open **Settings → Build & Deployment → Root Directory** and **disable “Skip deployments”** for that project (wording may be “Skip unaffected projects”).
 3. **Root Directory** — If Root Directory is **`apps/admin`**, enable **“Include files outside the root directory in the Build Step”** when your install runs `cd ../.. && npm ci` (so the lockfile at the repo root is visible). If Root Directory is **`.`** (empty), root `vercel.json` must **not** set `framework: "vite"` (Vite lives under `apps/admin` only).
 4. **Failed builds** — Open the latest row under **Deployments**; a red build still leaves the previous Production deploy live. Fix the error in the build log (common: `npm ci` lockfile mismatch, wrong **Output Directory**).
 
 ### If production still looks old (stale bundle)
 
-Quick check: the browser tab title should be **DukorPay — Operations Console** (see [apps/admin/index.html](apps/admin/index.html)). If you still see **DukorPay Admin** or markdown text like “Wire your admin JWT”, Production is an old deploy.
+Quick check: the browser tab title should be **Rapid — Operations Console** (see [apps/admin/index.html](apps/admin/index.html)). If you still see **Rapid Admin** or markdown text like “Wire your admin JWT”, Production is an old deploy.
 
-1. **Vercel → Project → Settings → Domains** — confirm `dukorpay.vercel.app` is attached to this project (not another team/project).
-2. **Settings → Git** — connect **bridgewest/dukorpay**, production branch **main**.
+1. **Vercel → Project → Settings → Domains** — confirm `rapid.vercel.app` is attached to this project (not another team/project).
+2. **Settings → Git** — connect **bridgewest/rapid**, production branch **main**.
 3. **Settings → General → Root Directory** — set to **`.`** *or* **`apps/admin`** to match one of the `vercel.json` layouts above. Do not leave a third path.
 4. **Settings → General → Build & Development Settings** — if **Override** is enabled for Install, Build, or Output Directory, either align them with the chosen `vercel.json` or **turn overrides off** so the repo config is used.
 5. **Deployments** — open the latest **Production** row: confirm it shows a recent **Git** commit (not only “Redeploy” of an old CLI build). Open the build log and fix errors until exit code **0**.
-6. After a good deploy, **View page source** and look for `<meta name="dukorpay-build" content="…">` — it should match the short Git SHA of that deployment. The sidebar also shows **Build** with the same id.
+6. After a good deploy, **View page source** and look for `<meta name="rapid-build" content="…">` — it should match the short Git SHA of that deployment. The sidebar also shows **Build** with the same id.
 
 ## Product phases (schema)
 
@@ -112,4 +112,4 @@ Quick check: the browser tab title should be **DukorPay — Operations Console**
 
 ## License
 
-Proprietary — Bridgewest / DukorPay.
+Proprietary — Bridgewest / Rapid.

@@ -12,7 +12,7 @@ export function HomeScreen() {
   return (
     <ScrollView style={styles.root} contentContainerStyle={styles.content}>
       <Text style={styles.kicker}>Home</Text>
-      <Text style={styles.title}>DukorPay</Text>
+      <Text style={styles.title}>Rapid</Text>
       <Text style={styles.subtitle}>U.S. → Liberia · remittance, airtime & bills</Text>
 
       <View style={styles.rateCard}>

@@ -21,7 +21,7 @@ export function WelcomeScreen({ navigation }: Props) {
       {/* HEADER */}
       <View style={[s.header, d && s.headerD]}>
         <View style={s.hLeft}>
-          <View style={s.logoBox}><View style={s.logoIcon}><Text style={s.logoIconT}>DP</Text></View><Text style={s.logoT}>DukorPay</Text></View>
+          <View style={s.logoBox}><View style={s.logoIcon}><Text style={s.logoIconT}>DP</Text></View><Text style={s.logoT}>Rapid</Text></View>
           {d && <View style={s.hLinks}><Text style={s.hLink}>Send Money</Text><Text style={s.hLink}>Track Transfer</Text><Text style={s.hLink}>Help</Text></View>}
         </View>
         <View style={s.hAuth}>
@@ -107,7 +107,7 @@ export function WelcomeScreen({ navigation }: Props) {
       <View style={s.appWrap}>
         <View style={s.appInner}>
           <Text style={s.appTitle}>Manage transfers on the go.</Text>
-          <Text style={s.appSub}>Download the DukorPay app to track your transfers, save recipients, and access exclusive mobile rates.</Text>
+          <Text style={s.appSub}>Download the Rapid app to track your transfers, save recipients, and access exclusive mobile rates.</Text>
           <View style={s.appBtns}><View style={s.appBtn}><Text style={s.appBtnT}>🍏 App Store</Text></View><View style={s.appBtn}><Text style={s.appBtnT}>▶️ Google Play</Text></View></View>
         </View>
       </View>
@@ -115,14 +115,14 @@ export function WelcomeScreen({ navigation }: Props) {
       {/* FAT FOOTER */}
       <View style={s.footer}>
         <View style={[s.fGrid, d && s.fGridD]}>
-          <View style={s.fCol}><Text style={s.fLogo}>DukorPay</Text><Text style={s.fDesc}>The smarter, faster, and safer way to send money home.</Text></View>
+          <View style={s.fCol}><Text style={s.fLogo}>Rapid</Text><Text style={s.fDesc}>The smarter, faster, and safer way to send money home.</Text></View>
           <View style={s.fCol}><Text style={s.fTitle}>Company</Text><Text style={s.fLink}>About Us</Text><Text style={s.fLink}>Careers</Text><Text style={s.fLink}>Press</Text><Text style={s.fLink}>Investors</Text></View>
           <View style={s.fCol}><Text style={s.fTitle}>Support</Text><Text style={s.fLink}>Help Center</Text><Text style={s.fLink}>Contact Us</Text><Text style={s.fLink}>Fraud Awareness</Text><Text style={s.fLink}>Track a Transfer</Text></View>
           <View style={s.fCol}><Text style={s.fTitle}>Legal</Text><Text style={s.fLink}>Terms of Service</Text><Text style={s.fLink}>Privacy Policy</Text><Text style={s.fLink}>Cookie Policy</Text><Text style={s.fLink}>Licenses & Disclosures</Text></View>
         </View>
         <View style={s.fBottom}>
-          <Text style={s.fDisclaim}>DukorPay Technologies is a financial technology company, not a bank. Money transmission services are provided by our licensed partners. All transfers are subject to review.</Text>
-          <Text style={s.fCopy}>© {new Date().getFullYear()} DukorPay Technologies. All rights reserved.</Text>
+          <Text style={s.fDisclaim}>Rapid Technologies is a financial technology company, not a bank. Money transmission services are provided by our licensed partners. All transfers are subject to review.</Text>
+          <Text style={s.fCopy}>© {new Date().getFullYear()} Rapid Technologies. All rights reserved.</Text>
         </View>
       </View>
 

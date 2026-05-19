@@ -21,7 +21,7 @@ export function Dashboard() {
         <p className="page-header__eyebrow">Operations</p>
         <h1 className="page-header__title">Overview</h1>
         <p className="page-header__desc">
-          Monitor DukorPay platform health, money-movement activity, and compliance queues. This console is
+          Monitor Rapid platform health, money-movement activity, and compliance queues. This console is
           intended for authorized operations and compliance staff only.
         </p>
       </header>
@@ -51,7 +51,7 @@ export function Dashboard() {
       <div className="hint-box" style={{ marginBottom: 24 }}>
         <strong>Secure access.</strong> Authenticate with an administrator account issued by your organization.
         Paste a valid JWT into browser{" "}
-        <code style={{ fontSize: "0.8em" }}>localStorage.dukorpay_admin_token</code> if your session has
+        <code style={{ fontSize: "0.8em" }}>localStorage.rapid_admin_token</code> if your session has
         expired.
       </div>
 

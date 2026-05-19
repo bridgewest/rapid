@@ -1,5 +1,5 @@
 /**
- * DukorPay — Premium Fintech Palette (Trust Blue)
+ * Rapid — Premium Fintech Palette (Trust Blue)
  * Inspired by industry leaders (Remitly, Melio).
  * High-contrast, extremely trustworthy, clean surfaces.
  */

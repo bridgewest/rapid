@@ -83,10 +83,10 @@ export function Layout() {
       <header className="app-header">
         <div className="app-header__left">
           <div className="app-header__mark" aria-hidden="true">
-            <span className="app-header__mark-text">DP</span>
+            <span className="app-header__mark-text">RP</span>
           </div>
           <div className="app-header__brand">
-            <span className="app-header__logo">DukorPay</span>
+            <span className="app-header__logo">Rapid</span>
             <span className="app-header__tagline">Operations Console</span>
           </div>
         </div>
@@ -120,7 +120,7 @@ export function Layout() {
         <aside className="app-sidebar">
           <div className="app-sidebar__label">Navigation</div>
           <nav className="app-sidebar__nav" aria-label="Main">
-            <NavLink to="/" end className={linkClass}>
+            <NavLink to="/dashboard" end className={linkClass}>
               <IconOverview />
               Overview
             </NavLink>

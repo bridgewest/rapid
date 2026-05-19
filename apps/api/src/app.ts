@@ -33,7 +33,7 @@ export function createApp() {
     }),
   );
 
-  app.get("/health", (_req, res) => res.json({ ok: true, service: "dukorpay-api" }));
+  app.get("/health", (_req, res) => res.json({ ok: true, service: "rapid-api" }));
 
   app.use("/auth", authRoutes);
   app.use("/users", userRoutes);

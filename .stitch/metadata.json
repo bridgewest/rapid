@@ -1,0 +1,28 @@
+{
+  "projectId": "8827293693251619898",
+  "title": "Rapid",
+  "designSystem": {
+    "assetId": "a95e6cc9707b408483a8ce05f28e76c7",
+    "name": "assets/a95e6cc9707b408483a8ce05f28e76c7",
+    "displayName": "Rapid Design System",
+    "source": ".stitch/DESIGN.md"
+  },
+  "screens": [
+    {
+      "id": "25c4ef9328fb490ca7842fa5d306600a",
+      "name": "projects/8827293693251619898/screens/25c4ef9328fb490ca7842fa5d306600a",
+      "title": "Rapid Remittance Landing Page",
+      "deviceType": "DESKTOP",
+      "localHtml": ".stitch/designs/rapid-landing.html",
+      "localScreenshot": ".stitch/designs/rapid-landing.png"
+    },
+    {
+      "id": "3224799238063508358",
+      "name": "projects/8827293693251619898/screens/3224799238063508358",
+      "title": "DESIGN.md",
+      "deviceType": "DESKTOP",
+      "localSource": ".stitch/DESIGN.md"
+    }
+  ],
+  "updatedAt": "2026-05-19T01:04:18Z"
+}

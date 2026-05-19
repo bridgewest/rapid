@@ -1,8 +1,8 @@
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const TOKEN_KEY = "dukorpay_access_token";
-const ONBOARDING_KEY = "dukorpay_onboarding_complete";
+const TOKEN_KEY = "rapid_access_token";
+const ONBOARDING_KEY = "rapid_onboarding_complete";
 
 export async function isOnboardingComplete(): Promise<boolean> {
   return (await AsyncStorage.getItem(ONBOARDING_KEY)) === "1";

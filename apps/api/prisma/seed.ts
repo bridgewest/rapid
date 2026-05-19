@@ -17,7 +17,7 @@ async function main() {
     });
   }
 
-  const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "admin@dukorpay.local";
+  const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "admin@rapid.local";
   const exists = await prisma.user.findUnique({ where: { email: adminEmail } });
   if (!exists) {
     const hash = await bcrypt.hash(process.env.SEED_ADMIN_PASSWORD ?? "admin-admin-admin", 12);

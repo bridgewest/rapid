@@ -16,11 +16,11 @@ export default defineConfig(() => {
     plugins: [
       react(),
       {
-        name: "dukorpay-html-build-meta",
+        name: "rapid-html-build-meta",
         transformIndexHtml(html) {
           return html.replace(
             "</head>",
-            `    <meta name="dukorpay-build" content="${buildId}" />\n  </head>`,
+            `    <meta name="rapid-build" content="${buildId}" />\n  </head>`,
           );
         },
       },

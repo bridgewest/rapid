@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
+import { Landing } from "./pages/Landing";
 import { Dashboard } from "./pages/Dashboard";
 import { KycQueue } from "./pages/KycQueue";
 import { Transactions } from "./pages/Transactions";
@@ -9,8 +10,9 @@ import { Aml } from "./pages/Aml";
 export default function App() {
   return (
     <Routes>
+      <Route path="/" element={<Landing />} />
       <Route element={<Layout />}>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/transactions" element={<Transactions />} />
         <Route path="/kyc" element={<KycQueue />} />
         <Route path="/analytics" element={<Analytics />} />

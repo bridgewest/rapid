@@ -1,4 +1,4 @@
-// DukorPay — extensible schema for Phases 1–5
+// Rapid — extensible schema for Phases 1–5
 // Phase 1: REMITTANCE | Phase 2: AIRTIME | Phase 3: BILL_PAY | Phase 4: PARTNER_ORDER | Phase 5: SAVINGS
 
 generator client {

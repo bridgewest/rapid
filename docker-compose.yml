@@ -4,19 +4,19 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: dukorpay
-      POSTGRES_PASSWORD: dukorpay_dev
-      POSTGRES_DB: dukorpay
+      POSTGRES_USER: rapid
+      POSTGRES_PASSWORD: rapid_dev
+      POSTGRES_DB: rapid
     volumes:
-      - dukorpay_pg:/var/lib/postgresql/data
+      - rapid_pg:/var/lib/postgresql/data
 
   redis:
     image: redis:7-alpine
     ports:
       - "6379:6379"
     volumes:
-      - dukorpay_redis:/data
+      - rapid_redis:/data
 
 volumes:
-  dukorpay_pg:
-  dukorpay_redis:
+  rapid_pg:
+  rapid_redis:
