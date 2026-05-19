@@ -1,11 +1,24 @@
 import { useEffect, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { adminFetch } from "../lib/api";
 
 function IconOverview() {
   return (
     <svg className="app-sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
       <path d="M4 13h6V5H4v8zm0 6h6v-4H4v4zm8 0h6v-8h-6v8zm0-14v4h6V5h-6z" fill="currentColor" opacity=".9" />
+    </svg>
+  );
+}
+
+function IconHome() {
+  return (
+    <svg className="app-sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M4 11.5L12 5l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-8.5z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -81,15 +94,12 @@ export function Layout() {
     <div className="app-shell">
       <div className="app-accent-strip" aria-hidden="true" />
       <header className="app-header">
-        <div className="app-header__left">
-          <div className="app-header__mark" aria-hidden="true">
-            <span className="app-header__mark-text">RP</span>
-          </div>
+        <Link className="app-header__left app-header__home" to="/" aria-label="Open Rapid landing page">
           <div className="app-header__brand">
             <span className="app-header__logo">Rapid</span>
             <span className="app-header__tagline">Operations Console</span>
           </div>
-        </div>
+        </Link>
         <div className="app-header__right">
           <span className="app-header__env">Production</span>
           <span className="app-header__pill" title="Corridor">
@@ -120,6 +130,10 @@ export function Layout() {
         <aside className="app-sidebar">
           <div className="app-sidebar__label">Navigation</div>
           <nav className="app-sidebar__nav" aria-label="Main">
+            <NavLink to="/" end className={linkClass}>
+              <IconHome />
+              Landing page
+            </NavLink>
             <NavLink to="/dashboard" end className={linkClass}>
               <IconOverview />
               Overview

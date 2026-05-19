@@ -332,7 +332,7 @@ export function Landing() {
 
         <section className="rapid-image-section" aria-label="Rapid customer and team moments">
           <article className="rapid-image-card rapid-image-card--large" data-reveal>
-            <img src="/images/sender.png" alt="Rapid customer in the United States checking a transfer status on a phone" />
+            <img src="/images/sender-asian.png" alt="Asian American Rapid customer in the United States checking a transfer status on a phone" />
             <div>
               <span>Sender view</span>
               <h2>Start from the U.S. with the quote in front of you.</h2>
@@ -351,9 +351,9 @@ export function Landing() {
               </div>
             </article>
             <article className="rapid-image-card" data-reveal>
-              <img src="/images/team.png" alt="Diverse Rapid operations team in a professional workspace" />
+              <img src="/images/team-diverse.png" alt="Asian, white, and Black Rapid operations teammates reviewing transfer support in a professional workspace" />
               <div>
-                <span>Operations view</span>
+                <span>Diverse operations team</span>
                 <h3>Human review supports safer money movement.</h3>
               </div>
             </article>
