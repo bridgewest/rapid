@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Landing } from "./pages/Landing";
+import { RideLanding } from "./pages/RideLanding";
 import { Dashboard } from "./pages/Dashboard";
 import { KycQueue } from "./pages/KycQueue";
 import { Transactions } from "./pages/Transactions";
@@ -13,6 +14,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
+      <Route path="/ride" element={<RideLanding />} />
       <Route element={<Layout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/transactions" element={<Transactions />} />

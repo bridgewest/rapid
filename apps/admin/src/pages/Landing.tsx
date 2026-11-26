@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SiteNav } from "../components/SiteNav";
 
 const EXCHANGE_RATE = 192;
 const TRANSFER_FEE_RATE = 0.015;
@@ -9,51 +10,6 @@ const deliveryOptions = [
   { id: "bank", label: "Bank deposit", detail: "Deposit to local bank" },
   { id: "cash", label: "Cash pickup", detail: "Partner counter pickup" },
 ] as const;
-
-/** Mirrors apps/api/src/services/rides.ts FARE_TABLE — illustrative only. */
-const RIDE_CLASSES = [
-  { id: "KEKE", label: "Keke", icon: "🛺", base: 100, perKm: 40, perMin: 5, min: 150 },
-  { id: "TAXI", label: "Taxi", icon: "🚕", base: 200, perKm: 70, perMin: 8, min: 300 },
-  { id: "COMFORT", label: "Comfort", icon: "🚙", base: 400, perKm: 120, perMin: 12, min: 600 },
-] as const;
-
-const RIDE_PLACES = [
-  { label: "Broad Street", lat: 6.3156, lng: -10.8074 },
-  { label: "Capitol Hill", lat: 6.3046, lng: -10.7935 },
-  { label: "JFK Medical Center", lat: 6.2953, lng: -10.7799 },
-  { label: "Sinkor", lat: 6.293, lng: -10.777 },
-  { label: "Congo Town", lat: 6.278, lng: -10.75 },
-  { label: "Red Light Market", lat: 6.2955, lng: -10.715 },
-  { label: "ELWA Junction", lat: 6.2416, lng: -10.7047 },
-  { label: "Freeport (Bushrod Island)", lat: 6.346, lng: -10.79 },
-  { label: "Roberts Intl Airport", lat: 6.2338, lng: -10.3623 },
-];
-
-function estimateRide(fromIdx: number, toIdx: number) {
-  const a = RIDE_PLACES[fromIdx];
-  const b = RIDE_PLACES[toIdx];
-  const toRad = (d: number) => (d * Math.PI) / 180;
-  const h =
-    Math.sin(toRad(b.lat - a.lat) / 2) ** 2 +
-    Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(toRad(b.lng - a.lng) / 2) ** 2;
-  const km = Math.max(0.3, 2 * 6371 * Math.asin(Math.sqrt(h)) * 1.35);
-  const min = Math.max(3, Math.round((Math.min(km, 10) / 18 + Math.max(0, km - 10) / 45) * 60));
-  return {
-    km: Math.round(km * 10) / 10,
-    min,
-    fares: RIDE_CLASSES.map((c) => ({
-      ...c,
-      fare: Math.ceil(Math.max(c.min, c.base + c.perKm * km + c.perMin * min) / 25) * 25,
-    })),
-  };
-}
-
-const driverPerks = [
-  "Keep 85% of every fare",
-  "Drive when you want — go online with one tap",
-  "Keke, taxi or private car welcome",
-  "Rider PIN check and trip sharing on every ride",
-];
 
 const corridorStats = [
   ["Corridor", "USD -> LRD"],
@@ -171,10 +127,6 @@ export function Landing() {
   const prefersReducedMotion = usePrefersReducedMotion();
   useReveal(prefersReducedMotion);
 
-  const [rideFrom, setRideFrom] = useState(1);
-  const [rideTo, setRideTo] = useState(6);
-  const ride = useMemo(() => estimateRide(rideFrom, rideTo), [rideFrom, rideTo]);
-
   const [sendAmount, setSendAmount] = useState("1,000.00");
   const [delivery, setDelivery] = useState<(typeof deliveryOptions)[number]["id"]>("mobile");
   const amountUsd = useMemo(() => parseAmount(sendAmount), [sendAmount]);
@@ -229,33 +181,17 @@ export function Landing() {
 
   return (
     <div className="rapid-landing">
-      <header className="rapid-nav">
-        <div className="rapid-nav__inner">
-          <button
-            className="rapid-brand"
-            type="button"
-            onClick={() => window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" })}
-          >
-            Rapid
-          </button>
-          <nav className="rapid-nav__links" aria-label="Primary navigation">
-            <a href="#ride">Ride</a>
-            <a href="#send">Send Money</a>
-            <a href="#rates">Rates</a>
-            <a href="#how">How It Works</a>
-            <a href="#security">Security</a>
-            <a href="#help">Help</a>
-          </nav>
-          <div className="rapid-nav__actions">
-            <button className="rapid-link-button" type="button" onClick={goToDashboard}>
-              Log In
-            </button>
-            <button className="rapid-button rapid-button--small" type="button" onClick={goToDashboard}>
-              Start a Transfer
-            </button>
-          </div>
-        </div>
-      </header>
+      <SiteNav
+        active="send"
+        links={[
+          { href: "#send", label: "Send Money" },
+          { href: "#rates", label: "Rates" },
+          { href: "#how", label: "How It Works" },
+          { href: "#security", label: "Security" },
+          { href: "#help", label: "Help" },
+        ]}
+        primaryCta={{ label: "Start a Transfer", onClick: goToDashboard }}
+      />
 
       <main>
         <section className="rapid-hero" id="send">
@@ -264,8 +200,7 @@ export function Landing() {
             <h1>Send money from the U.S. to Liberia with clarity and control.</h1>
             <p>
               Rapid helps families fund transfers, airtime, and everyday support with transparent fees,
-              USD to LRD estimates, and status tracking from confirmation to delivery — and now gets
-              you around Monrovia with <a href="#ride">Rapid Ride</a>.
+              USD to LRD estimates, and status tracking from confirmation to delivery.
             </p>
             <div className="rapid-hero__actions">
               <button className="rapid-button" type="button" onClick={goToDashboard}>
@@ -358,81 +293,6 @@ export function Landing() {
               <strong>{value}</strong>
             </div>
           ))}
-        </section>
-
-        <section className="rapid-section rapid-section--split rapid-ride" id="ride">
-          <div className="rapid-section__intro" data-reveal>
-            <span className="rapid-kicker">Rapid Ride · Monrovia</span>
-            <h2>Get around Monrovia with a price you know before you go.</h2>
-            <p>
-              Book a keke, taxi or comfort car from your phone. See the fare up front, share your trip
-              with family, and pay cash or mobile money. Booking for family in Liberia from abroad? You can
-              do that too.
-            </p>
-            <ul className="rapid-ride__bullets">
-              <li>Fixed fare shown before you request</li>
-              <li>Verified drivers, plate check and 4-digit pickup PIN</li>
-              <li>Pickup by landmark — no street address needed</li>
-            </ul>
-          </div>
-
-          <aside className="rapid-quote-card" aria-label="Illustrative ride fare" data-reveal>
-            <div className="rapid-quote-card__topline">
-              <span>Fare estimate</span>
-              <span>LRD</span>
-            </div>
-            <label className="rapid-field">
-              <span>From</span>
-              <select value={rideFrom} onChange={(e) => setRideFrom(Number(e.target.value))}>
-                {RIDE_PLACES.map((p, i) => (
-                  <option key={p.label} value={i}>{p.label}</option>
-                ))}
-              </select>
-            </label>
-            <label className="rapid-field">
-              <span>To</span>
-              <select value={rideTo} onChange={(e) => setRideTo(Number(e.target.value))}>
-                {RIDE_PLACES.map((p, i) => (
-                  <option key={p.label} value={i}>{p.label}</option>
-                ))}
-              </select>
-            </label>
-            <div className="rapid-fee-list">
-              {rideFrom === rideTo ? (
-                <div>
-                  <span>Choose two different places</span>
-                  <strong>—</strong>
-                </div>
-              ) : (
-                ride.fares.map((f) => (
-                  <div key={f.id}>
-                    <span>{f.icon} {f.label}</span>
-                    <strong>L$ {f.fare.toLocaleString("en-US")}</strong>
-                  </div>
-                ))
-              )}
-            </div>
-            <p className="rapid-review-note">
-              About {ride.km} km · {ride.min} min. Estimate only — final fare is shown in the app before you book.
-            </p>
-          </aside>
-        </section>
-
-        <section className="rapid-cta rapid-drive" id="drive" data-reveal>
-          <div>
-            <span className="rapid-kicker">Drive with Rapid</span>
-            <h2>Own a keke or car? Earn with Rapid on your schedule.</h2>
-            <ul className="rapid-ride__bullets">
-              {driverPerks.map((p) => (
-                <li key={p}>{p}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="rapid-cta__actions">
-            <button className="rapid-button" type="button" onClick={() => document.getElementById("help")?.scrollIntoView()}>
-              Apply in the app
-            </button>
-          </div>
         </section>
 
         <section className="rapid-section rapid-section--split" id="how">
@@ -540,6 +400,7 @@ export function Landing() {
           </p>
         </div>
         <nav aria-label="Footer navigation">
+          <a href="/ride">Rapid Ride</a>
           <a href="#send">Terms</a>
           <a href="#send">Privacy</a>
           <a href="#help">Support</a>
