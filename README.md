@@ -86,6 +86,17 @@ Quick check: the browser tab title should be **Rapid — Operations Console** (s
 5. **Deployments** — open the latest **Production** row: confirm it shows a recent **Git** commit (not only “Redeploy” of an old CLI build). Open the build log and fix errors until exit code **0**.
 6. After a good deploy, **View page source** and look for `<meta name="rapid-build" content="…">` — it should match the short Git SHA of that deployment. The sidebar also shows **Build** with the same id.
 
+## Rapid Ride (Monrovia ride-hailing)
+
+Uber-style rides for Liberia: **Keke**, **Taxi**, **Comfort** — fares in LRD, pay cash / mobile money (wallet later).
+
+- **Rider app** (Ride tab): landmark-based pickup/drop-off, upfront fares per class, request → live status → 4-digit pickup PIN → rating. Book for someone else, share trip.
+- **Driver mode** (Ride tab → "Drive with Rapid"): apply → admin approval → go online (GPS pings) → accept/pass offers → arrive → enter rider PIN → complete. Keeps 85%.
+- **Ops console**: `/rides` live trips + KPIs, `/drivers` approve / reject / suspend (audited).
+- **API**: `POST /rides/estimate`, `POST /rides`, `GET /rides/active|history|:id`, `POST /rides/:id/cancel|rate`; `/driver/apply|me|status|location|offers`, `/driver/rides/:id/accept|decline|arrive|start|complete|cancel`; `/admin/drivers`, `/admin/rides`, `/admin/rides/summary`.
+- Pricing / dispatch tuning: `apps/api/src/services/rides.ts` (fare table, 6 km dispatch radius, surge cap 1.5×, 15% take). Landmarks: `apps/mobile/src/ride/places.ts` (approximate coords — verify).
+- **Local testing solo**: `npm run db:seed -w apps/api` adds 5 demo drivers; `npm run api:ride-sim` keeps them online and drives your requested ride through the full lifecycle.
+
 ## Product phases (schema)
 
 - **Phase 1:** `REMITTANCE` — USD→LRD, 1.5% fee, BaaS placeholder  

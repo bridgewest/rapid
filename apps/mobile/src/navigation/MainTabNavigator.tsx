@@ -15,6 +15,7 @@ import { HomeScreen } from "../screens/tabs/HomeScreen";
 import { HistoryScreen } from "../screens/tabs/HistoryScreen";
 import { WalletScreen } from "../screens/tabs/WalletScreen";
 import { ProfileScreen } from "../screens/tabs/ProfileScreen";
+import { RideNavigator } from "./RideNavigator";
 
 export type SendFlowParamList = {
   SendHub: undefined;
@@ -54,6 +55,7 @@ function SendFlow() {
 
 export type MainTabParamList = {
   Home: undefined;
+  RideFlow: undefined;
   SendFlow: undefined;
   History: undefined;
   Wallet: undefined;
@@ -78,6 +80,7 @@ export function MainTabNavigator() {
       }}
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ title: "Home" }} />
+      <Tab.Screen name="RideFlow" component={RideNavigator} options={{ title: "Ride", headerShown: false }} />
       <Tab.Screen
         name="SendFlow"
         component={SendFlow}

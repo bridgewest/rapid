@@ -3,7 +3,7 @@ import { View, Text, Pressable, StyleSheet, ActivityIndicator } from "react-nati
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { colors } from "../../theme";
 import { apiFetch } from "../../api/client";
-import type { SendFlowParamList } from "../MainTabNavigator";
+import type { SendFlowParamList } from "../../navigation/MainTabNavigator";
 
 type Props = NativeStackScreenProps<SendFlowParamList, "SendReview">;
 

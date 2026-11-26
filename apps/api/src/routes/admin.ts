@@ -135,4 +135,101 @@ router.get("/aml", async (_req, res, next) => {
   }
 });
 
+// ───────────── Rapid Ride ─────────────
+
+router.get("/drivers", async (req, res, next) => {
+  try {
+    const { status } = z
+      .object({ status: z.enum(["PENDING", "APPROVED", "SUSPENDED", "REJECTED"]).optional() })
+      .parse(req.query);
+    const drivers = await prisma.driverProfile.findMany({
+      where: status ? { status } : undefined,
+      orderBy: [{ status: "asc" }, { createdAt: "desc" }],
+      take: 200,
+      include: { user: { select: { email: true, phoneE164: true } } },
+    });
+    return res.json(drivers);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.post("/drivers/:id/decide", async (req, res, next) => {
+  try {
+    const body = z
+      .object({ decision: z.enum(["APPROVED", "REJECTED", "SUSPENDED"]), notes: z.string().max(500).optional() })
+      .parse(req.body);
+    const driver = await prisma.driverProfile.update({
+      where: { id: req.params.id },
+      data: {
+        status: body.decision,
+        reviewerNotes: body.notes,
+        ...(body.decision === "APPROVED" ? { approvedAt: new Date() } : { isOnline: false }),
+      },
+    });
+    await prisma.auditLog.create({
+      data: {
+        userId: req.user!.id,
+        action: `driver.${body.decision.toLowerCase()}`,
+        resource: "DriverProfile",
+        resourceId: driver.id,
+        payload: { notes: body.notes ?? null },
+      },
+    });
+    return res.json(driver);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get("/rides", async (req, res, next) => {
+  try {
+    const { status, take } = z
+      .object({ status: z.string().optional(), take: z.coerce.number().max(200).default(100) })
+      .parse(req.query);
+    const rides = await prisma.ride.findMany({
+      where: status ? { status: status as never } : undefined,
+      orderBy: { requestedAt: "desc" },
+      take,
+      include: {
+        rider: { select: { email: true, phoneE164: true } },
+        driver: { select: { fullName: true, plateNumber: true, vehicleClass: true } },
+      },
+    });
+    return res.json(rides.map(({ pickupPin: _p, ...r }) => r));
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get("/rides/summary", async (_req, res, next) => {
+  try {
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    const [driversOnline, driversPending, activeRides, completedToday, grossToday, byStatus] = await Promise.all([
+      prisma.driverProfile.count({
+        where: { isOnline: true, status: "APPROVED", lastLocationAt: { gte: new Date(Date.now() - 2 * 60_000) } },
+      }),
+      prisma.driverProfile.count({ where: { status: "PENDING" } }),
+      prisma.ride.count({ where: { status: { in: ["REQUESTED", "DRIVER_ASSIGNED", "DRIVER_ARRIVED", "IN_PROGRESS"] } } }),
+      prisma.ride.count({ where: { status: "COMPLETED", completedAt: { gte: startOfDay } } }),
+      prisma.ride.aggregate({
+        _sum: { fareFinalLrd: true },
+        where: { status: "COMPLETED", completedAt: { gte: startOfDay } },
+      }),
+      prisma.ride.groupBy({ by: ["status"], _count: { _all: true } }),
+    ]);
+    return res.json({
+      driversOnline,
+      driversPending,
+      activeRides,
+      completedToday,
+      grossFareTodayLrd: grossToday._sum.fareFinalLrd ?? 0,
+      byStatus: byStatus.map((b) => ({ status: b.status, count: b._count._all })),
+    });
+  } catch (e) {
+    next(e);
+  }
+});
+
 export default router;

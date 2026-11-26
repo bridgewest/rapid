@@ -1573,3 +1573,90 @@ body {
     transform: none;
   }
 }
+
+/* ── Rapid Ride admin controls ── */
+.seg-control {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-soft);
+  flex-wrap: wrap;
+}
+.seg-control__btn {
+  border: 0;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.seg-control__btn.is-active {
+  background: var(--surface);
+  color: var(--accent-deep);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.btn {
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  margin-left: 6px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary, inherit);
+  cursor: pointer;
+}
+.btn:disabled { opacity: 0.5; cursor: default; }
+.btn--primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn--danger { background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+.live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+  vertical-align: middle;
+}
+
+/* ── Rapid Ride landing section ── */
+.rapid-field select {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid var(--rapid-line);
+  border-radius: 12px;
+  background: var(--rapid-surface-soft);
+  color: var(--rapid-ink);
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+}
+.rapid-field select:focus {
+  border-color: rgba(13, 148, 136, 0.72);
+  background: var(--rapid-surface);
+}
+.rapid-ride__bullets {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  color: var(--rapid-ink);
+  font-weight: 600;
+}
+.rapid-ride__bullets li::before {
+  content: "✓";
+  color: var(--rapid-accent, #0d9488);
+  margin-right: 10px;
+  font-weight: 800;
+}
+.rapid-ride .rapid-quote-card { display: grid; gap: 14px; }

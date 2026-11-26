@@ -1,4 +1,4 @@
-// Rapid — extensible schema for Phases 1–5
+// Rapid — extensible schema for Phases 1–5 + Rapid Ride (transportation)
 // Phase 1: REMITTANCE | Phase 2: AIRTIME | Phase 3: BILL_PAY | Phase 4: PARTNER_ORDER | Phase 5: SAVINGS
 
 generator client {
@@ -105,6 +105,10 @@ model User {
   referralRewards  ReferralReward[]
   adminProfile     AdminProfile?
   sessions         Session[]
+
+  // Rapid Ride (transportation)
+  driverProfile    DriverProfile?
+  ridesAsRider     Ride[]         @relation("RiderRides")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -370,4 +374,147 @@ model PartnerMerchant {
   active    Boolean  @default(true)
   metadata  Json?
   createdAt DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────────────────────
+// Rapid Ride — ride-hailing (taxi, car, keke) for Liberia
+// ─────────────────────────────────────────────────────────────
+
+enum VehicleClass {
+  KEKE        // tricycle — cheapest, short urban hops
+  TAXI        // shared-style yellow taxi, private hire
+  COMFORT     // private car (sedan / SUV)
+}
+
+enum DriverStatus {
+  PENDING     // applied, awaiting document review
+  APPROVED
+  SUSPENDED
+  REJECTED
+}
+
+enum RideStatus {
+  REQUESTED        // rider asked, searching for driver
+  DRIVER_ASSIGNED  // driver accepted, en route to pickup
+  DRIVER_ARRIVED
+  IN_PROGRESS      // rider PIN verified, trip started
+  COMPLETED
+  CANCELLED_BY_RIDER
+  CANCELLED_BY_DRIVER
+  NO_DRIVERS
+}
+
+enum RidePaymentMethod {
+  CASH
+  MOBILE_MONEY   // Orange Money / MTN MoMo — provider integration later
+  WALLET         // Rapid wallet — ties ride into payments phase
+}
+
+model DriverProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  status        DriverStatus @default(PENDING)
+  fullName      String
+  licenseNumber String
+  nationalId    String?
+  city          String       @default("Monrovia")
+
+  vehicleClass VehicleClass
+  vehicleMake  String
+  vehicleModel String
+  vehicleColor String
+  plateNumber  String       @unique
+  vehicleYear  Int?
+
+  // Live state
+  isOnline       Boolean   @default(false)
+  lat            Float?
+  lng            Float?
+  lastLocationAt DateTime?
+
+  ratingAvg   Float @default(5)
+  ratingCount Int   @default(0)
+  tripsCount  Int   @default(0)
+
+  reviewerNotes String?
+  approvedAt    DateTime?
+
+  rides     Ride[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isOnline, status, vehicleClass])
+}
+
+model Ride {
+  id       String @id @default(cuid())
+  publicId String @unique @default(cuid())
+
+  riderId  String
+  rider    User           @relation("RiderRides", fields: [riderId], references: [id])
+  driverId String?
+  driver   DriverProfile? @relation(fields: [driverId], references: [id])
+
+  status       RideStatus        @default(REQUESTED)
+  vehicleClass VehicleClass
+  paymentMethod RidePaymentMethod @default(CASH)
+
+  pickupLat     Float
+  pickupLng     Float
+  pickupLabel   String
+  dropoffLat    Float
+  dropoffLng    Float
+  dropoffLabel  String
+
+  distanceKm         Float
+  durationMin        Int
+  // Fares are quoted in LRD (local currency); USD shown for diaspora/wallet.
+  fareEstimateLrd    Int
+  fareFinalLrd       Int?
+  surgeMultiplier    Decimal @default(1) @db.Decimal(4, 2)
+  platformFeePercent Decimal @default(15) @db.Decimal(5, 2)
+
+  // 4-digit code rider tells driver at pickup — safety check
+  pickupPin String
+
+  riderRating   Int?
+  riderComment  String?
+  driverRating  Int?
+
+  // Rides passed on by these drivers (don't re-offer)
+  declinedByDriverIds String[] @default([])
+
+  // Booked by someone else (e.g. diaspora booking for family) — links to payments later
+  bookedForName  String?
+  bookedForPhone String?
+
+  requestedAt DateTime  @default(now())
+  acceptedAt  DateTime?
+  arrivedAt   DateTime?
+  startedAt   DateTime?
+  completedAt DateTime?
+  cancelledAt DateTime?
+  cancelReason String?
+
+  events    RideEvent[]
+  updatedAt DateTime    @updatedAt
+
+  @@index([status, vehicleClass])
+  @@index([riderId, requestedAt])
+  @@index([driverId, requestedAt])
+}
+
+model RideEvent {
+  id     String     @id @default(cuid())
+  rideId String
+  ride   Ride       @relation(fields: [rideId], references: [id], onDelete: Cascade)
+  status RideStatus
+  note   String?
+  lat    Float?
+  lng    Float?
+  createdAt DateTime @default(now())
+
+  @@index([rideId])
 }

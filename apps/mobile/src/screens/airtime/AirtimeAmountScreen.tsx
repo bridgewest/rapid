@@ -3,7 +3,7 @@ import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { apiFetch } from "../../api/client";
 import { colors } from "../../theme";
-import type { SendFlowParamList } from "../MainTabNavigator";
+import type { SendFlowParamList } from "../../navigation/MainTabNavigator";
 
 type Props = NativeStackScreenProps<SendFlowParamList, "AirtimeAmount">;
 

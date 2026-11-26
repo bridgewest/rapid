@@ -13,6 +13,8 @@ import transactionRoutes from "./routes/transactions.js";
 import walletRoutes from "./routes/wallet.js";
 import deviceRoutes from "./routes/devices.js";
 import adminRoutes from "./routes/admin.js";
+import rideRoutes from "./routes/rides.js";
+import driverRoutes from "./routes/driver.js";
 
 export function createApp() {
   const app = express();
@@ -43,6 +45,8 @@ export function createApp() {
   app.use("/transactions", transactionRoutes);
   app.use("/wallet", walletRoutes);
   app.use("/devices", deviceRoutes);
+  app.use("/rides", rideRoutes);
+  app.use("/driver", driverRoutes);
   app.use("/admin", adminRoutes);
 
   app.use(errorHandler);

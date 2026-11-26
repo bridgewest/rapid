@@ -78,6 +78,30 @@ function IconShield() {
   );
 }
 
+function IconCar() {
+  return (
+    <svg className="app-sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M5 16v2a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-2M5 16h14M5 16v-4l2-5h10l2 5v4M5 12h14"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconSteering() {
+  return (
+    <svg className="app-sidebar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+      <circle cx="12" cy="12" r="2" stroke="currentColor" strokeWidth="2" />
+      <path d="M3.5 10h6.5M14 10h6.5M12 14v7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function Layout() {
   const [apiOk, setApiOk] = useState<boolean | null>(null);
 
@@ -104,7 +128,7 @@ export function Layout() {
           <span className="app-header__env">Production</span>
           <span className="app-header__pill" title="Corridor">
             <span className="app-header__dot app-header__dot--muted" aria-hidden />
-            U.S. — Liberia
+            U.S. — Liberia · Monrovia rides
           </span>
           <span
             className={
@@ -153,6 +177,17 @@ export function Layout() {
             <NavLink to="/aml" className={linkClass}>
               <IconShield />
               Compliance &amp; AML
+            </NavLink>
+          </nav>
+          <div className="app-sidebar__label">Rapid Ride</div>
+          <nav className="app-sidebar__nav" aria-label="Rides">
+            <NavLink to="/rides" className={linkClass}>
+              <IconCar />
+              Live trips
+            </NavLink>
+            <NavLink to="/drivers" className={linkClass}>
+              <IconSteering />
+              Drivers
             </NavLink>
           </nav>
           <div className="app-sidebar__footer">

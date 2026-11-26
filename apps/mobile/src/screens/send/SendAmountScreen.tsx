@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Pressable, StyleSheet, Alert } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { colors } from "../../theme";
-import type { SendFlowParamList } from "../MainTabNavigator";
+import type { SendFlowParamList } from "../../navigation/MainTabNavigator";
 
 type Props = NativeStackScreenProps<SendFlowParamList, "SendAmount">;
 

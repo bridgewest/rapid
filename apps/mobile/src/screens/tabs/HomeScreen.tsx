@@ -1,6 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import type { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { colors, radii } from "../../theme";
+import type { MainTabParamList } from "../../navigation/MainTabNavigator";
 
 const QUICK_ACTIONS = [
   { title: "Send money", subtitle: "USD → LRD · 1.5% fee" },
@@ -9,11 +12,23 @@ const QUICK_ACTIONS = [
 ] as const;
 
 export function HomeScreen() {
+  const navigation = useNavigation<BottomTabNavigationProp<MainTabParamList>>();
   return (
     <ScrollView style={styles.root} contentContainerStyle={styles.content}>
       <Text style={styles.kicker}>Home</Text>
       <Text style={styles.title}>Rapid</Text>
-      <Text style={styles.subtitle}>U.S. → Liberia · remittance, airtime & bills</Text>
+      <Text style={styles.subtitle}>Rides in Monrovia · money to Liberia</Text>
+
+      <Pressable
+        style={({ pressed }) => [styles.rideCard, pressed && styles.quickChipPressed]}
+        onPress={() => navigation.navigate("RideFlow")}
+        accessibilityRole="button"
+      >
+        <Text style={styles.rideEmoji}>🛺 🚕 🚙</Text>
+        <Text style={styles.rideTitle}>Need a ride?</Text>
+        <Text style={styles.rideSub}>Keke, taxi or comfort car — fixed price up front, pay cash or mobile money.</Text>
+        <Text style={styles.rideCta}>Where to? →</Text>
+      </Pressable>
 
       <View style={styles.rateCard}>
         <View style={styles.rateBadge}>
@@ -60,6 +75,16 @@ const styles = StyleSheet.create({
   },
   title: { fontSize: 32, fontWeight: "800", color: colors.text, letterSpacing: -0.5, marginBottom: 6 },
   subtitle: { fontSize: 15, color: colors.textMuted, lineHeight: 22, marginBottom: 24 },
+  rideCard: {
+    backgroundColor: colors.accent,
+    borderRadius: radii.xl,
+    padding: 20,
+    marginBottom: 20,
+  },
+  rideEmoji: { fontSize: 26, marginBottom: 8 },
+  rideTitle: { color: colors.onAccent, fontSize: 22, fontWeight: "800", marginBottom: 4 },
+  rideSub: { color: "rgba(255,255,255,0.88)", fontSize: 14, lineHeight: 20 },
+  rideCta: { color: colors.onAccent, fontWeight: "800", fontSize: 15, marginTop: 12 },
   rateCard: {
     backgroundColor: colors.card,
     borderRadius: radii.lg,

@@ -6,19 +6,36 @@
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "scheme": "rapid",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.rapid.app"
+      "bundleIdentifier": "com.rapid.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Rapid uses your location to find nearby drivers and set your pickup point."
+      }
     },
     "android": {
-      "package": "com.rapid.app"
+      "package": "com.rapid.app",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro"
     },
     "extra": {
       "apiUrl": "http://localhost:4000"
-    }
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Rapid uses your location to find nearby drivers and set your pickup point."
+        }
+      ]
+    ]
   }
 }

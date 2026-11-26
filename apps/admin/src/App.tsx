@@ -6,6 +6,8 @@ import { KycQueue } from "./pages/KycQueue";
 import { Transactions } from "./pages/Transactions";
 import { Analytics } from "./pages/Analytics";
 import { Aml } from "./pages/Aml";
+import { Drivers } from "./pages/Drivers";
+import { Rides } from "./pages/Rides";
 
 export default function App() {
   return (
@@ -17,6 +19,8 @@ export default function App() {
         <Route path="/kyc" element={<KycQueue />} />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/aml" element={<Aml />} />
+        <Route path="/rides" element={<Rides />} />
+        <Route path="/drivers" element={<Drivers />} />
       </Route>
     </Routes>
   );
