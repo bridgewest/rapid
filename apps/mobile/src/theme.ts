@@ -3,24 +3,39 @@
  * Inspired by industry leaders (Remitly, Melio).
  * High-contrast, extremely trustworthy, clean surfaces.
  */
+/** Blue scale — from near-black navy to ice. */
+export const blues = {
+  ink: "#030817",
+  navy: "#0a1630",
+  navy2: "#12224a",
+  deep: "#1e3a8a",
+  royal: "#1d4ed8",
+  primary: "#2563eb",
+  bright: "#3574f6",
+  sky: "#60a5fa",
+  pale: "#93c5fd",
+  ice: "#dbeafe",
+  mist: "#eff6ff",
+};
+
 export const colors = {
-  bg: "#f4f7fb",           // Very soft cool gray/blue for the main background
+  bg: "#f5f8ff",           // Soft blue-white background
   bgElevated: "#ffffff",
   card: "#ffffff",
   
   /** Primary CTAs (Trust Blue) */
-  accent: "#0a58ca",       // A deep, vibrant Trust Blue (similar to Remitly/WorldRemit)
-  accentMuted: "#eaf2fd",  // Soft blue for badges/secondary cards
-  accentDark: "#084298",
+  accent: "#2563eb",       // Primary blue
+  accentMuted: "#e6efff",  // Ice blue for badges/secondary cards
+  accentDark: "#1d4ed8",
   
   /** Typography */
-  text: "#0f172a",         // Very dark slate, almost black for high readability
+  text: "#0b1530",         // Navy-black for high readability
   textSecondary: "#334155",
   textMuted: "#64748b",
   
   /** UI chrome */
-  border: "rgba(15, 23, 42, 0.08)",
-  borderStrong: "rgba(15, 23, 42, 0.15)",
+  border: "rgba(30, 58, 138, 0.10)",
+  borderStrong: "rgba(30, 58, 138, 0.20)",
   shadow: "rgba(15, 23, 42, 0.08)",
   
   /** Status */
@@ -34,7 +49,7 @@ export const colors = {
   
   /** Tab bar */
   tabBar: "#ffffff",
-  tabBarBorder: "rgba(15, 23, 42, 0.08)",
+  tabBarBorder: "rgba(30, 58, 138, 0.10)",
 };
 
 export const radii = {

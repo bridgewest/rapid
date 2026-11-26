@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { colors, radii } from "../../theme";
+import { blues, colors, radii } from "../../theme";
 import type { RideFlowParamList } from "../../navigation/RideNavigator";
 import { CLASS_INFO, PAYMENT_LABEL, lrd, rideApi, type RiderRide } from "../../ride/types";
 import { Button, Card, ErrorText, Row, ui } from "../../ride/ui";
@@ -168,7 +168,7 @@ export function RideTrackingScreen({ navigation, route }: Props) {
               <View style={styles.stars}>
                 {[1, 2, 3, 4, 5].map((n) => (
                   <Pressable key={n} onPress={() => setRating(n)} hitSlop={6}>
-                    <Text style={[styles.star, n <= rating && { color: "#f59e0b" }]}>★</Text>
+                    <Text style={[styles.star, n <= rating && { color: "#3574f6" }]}>★</Text>
                   </Pressable>
                 ))}
               </View>
@@ -194,9 +194,9 @@ export function RideTrackingScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.bg },
   center: { justifyContent: "center", alignItems: "center" },
-  hero: { backgroundColor: colors.accent, borderRadius: radii.xl, padding: 22, alignItems: "center" },
+  hero: { backgroundColor: blues.navy, borderRadius: radii.xl, padding: 22, alignItems: "center" },
   heroTitle: { color: colors.onAccent, fontSize: 22, fontWeight: "800", textAlign: "center" },
-  heroSub: { color: "rgba(255,255,255,0.85)", fontSize: 15, marginTop: 6, textAlign: "center" },
+  heroSub: { color: blues.pale, fontSize: 15, marginTop: 6, textAlign: "center" },
   pinBox: {
     backgroundColor: colors.card,
     borderRadius: radii.lg,
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   pin: { fontSize: 40, fontWeight: "900", color: colors.accentDark, letterSpacing: 4 },
   avatar: { width: 52, height: 52, borderRadius: 26, backgroundColor: colors.accentMuted, alignItems: "center", justifyContent: "center" },
   driverName: { fontSize: 17, fontWeight: "800", color: colors.text },
-  plate: { backgroundColor: "#fde047", borderRadius: radii.sm, paddingHorizontal: 8, paddingVertical: 4, borderWidth: 1, borderColor: "#111" },
+  plate: { backgroundColor: blues.ice, borderRadius: radii.sm, paddingHorizontal: 8, paddingVertical: 4, borderWidth: 1, borderColor: "#111" },
   plateText: { fontWeight: "900", color: "#111", letterSpacing: 1 },
   stars: { flexDirection: "row", justifyContent: "center", gap: 10, marginVertical: 12 },
   star: { fontSize: 38, color: colors.borderStrong },

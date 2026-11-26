@@ -67,6 +67,7 @@ const Tab = createBottomTabNavigator<MainTabParamList>();
 export function MainTabNavigator() {
   return (
     <Tab.Navigator
+      initialRouteName="RideFlow"
       screenOptions={{
         headerStyle: { backgroundColor: colors.bg },
         headerTintColor: colors.text,
@@ -79,8 +80,8 @@ export function MainTabNavigator() {
         tabBarInactiveTintColor: colors.textMuted,
       }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ title: "Home" }} />
       <Tab.Screen name="RideFlow" component={RideNavigator} options={{ title: "Ride", headerShown: false }} />
+      <Tab.Screen name="Home" component={HomeScreen} options={{ title: "Home" }} />
       <Tab.Screen
         name="SendFlow"
         component={SendFlow}

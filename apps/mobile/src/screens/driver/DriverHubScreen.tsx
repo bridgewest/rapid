@@ -13,7 +13,7 @@ import {
   View,
 } from "react-native";
 import * as Location from "expo-location";
-import { colors, radii } from "../../theme";
+import { blues, colors, radii } from "../../theme";
 import { MONROVIA_PLACES } from "../../ride/places";
 import { CLASS_INFO, PAYMENT_LABEL, lrd, rideApi, type DriverProfile, type DriverRide, type VehicleClass } from "../../ride/types";
 import { Button, Card, ErrorText, Row, ui } from "../../ride/ui";
@@ -400,7 +400,7 @@ function DriverDashboard({ profile, reload }: { profile: DriverProfile; reload: 
                   setLastCompleted(null);
                 }}
               >
-                <Text style={{ fontSize: 32, color: "#f59e0b" }}>★</Text>
+                <Text style={{ fontSize: 32, color: "#3574f6" }}>★</Text>
               </Pressable>
             ))}
           </View>
@@ -475,8 +475,8 @@ const styles = StyleSheet.create({
   classChipActive: { borderColor: colors.accent, backgroundColor: colors.accentMuted },
   classChipText: { fontWeight: "700", color: colors.text, marginTop: 2 },
   statusBar: { flexDirection: "row", alignItems: "center", borderRadius: radii.lg, padding: 16 },
-  statusOnline: { backgroundColor: colors.success },
-  statusOffline: { backgroundColor: colors.textSecondary },
+  statusOnline: { backgroundColor: blues.primary },
+  statusOffline: { backgroundColor: blues.navy },
   statusTitle: { color: "#fff", fontSize: 18, fontWeight: "800" },
   statusSub: { color: "rgba(255,255,255,0.85)", fontSize: 13, marginTop: 2 },
   stat: { flex: 1, backgroundColor: colors.card, borderRadius: radii.md, padding: 12, borderWidth: 1, borderColor: colors.border },

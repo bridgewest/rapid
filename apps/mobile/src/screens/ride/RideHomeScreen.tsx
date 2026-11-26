@@ -3,7 +3,7 @@ import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from "react-na
 import { useFocusEffect } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Location from "expo-location";
-import { colors, radii } from "../../theme";
+import { blues, colors, radii } from "../../theme";
 import type { RideFlowParamList } from "../../navigation/RideNavigator";
 import { nearestPlace, searchPlaces, type Place } from "../../ride/places";
 import { lrd, rideApi, type Point, type RiderRide } from "../../ride/types";
@@ -74,13 +74,13 @@ export function RideHomeScreen({ navigation }: Props) {
   return (
     <View style={styles.root}>
       <View style={styles.header}>
-        <Text style={ui.h1}>Where to?</Text>
-        <Text style={ui.muted}>Keke, taxi or comfort car — anywhere in Greater Monrovia.</Text>
+        <Text style={styles.headerTitle}>Where to?</Text>
+        <Text style={styles.headerSub}>Keke, taxi or comfort car — anywhere in Greater Monrovia.</Text>
       </View>
 
       <View style={styles.fields}>
         <FieldButton
-          dot={colors.success}
+          dot={blues.primary}
           label="Pickup"
           value={pickup?.label ?? (locating ? "Finding you…" : "Choose pickup")}
           active={editing === "pickup"}
@@ -88,7 +88,7 @@ export function RideHomeScreen({ navigation }: Props) {
         />
         <View style={styles.divider} />
         <FieldButton
-          dot={colors.danger}
+          dot={blues.navy}
           label="Destination"
           value={dropoff?.label ?? "Choose destination"}
           active={editing === "dropoff"}
@@ -171,10 +171,24 @@ function FieldButton(props: { dot: string; label: string; value: string; active:
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.bg },
-  header: { paddingHorizontal: 20, paddingTop: 8, paddingBottom: 14, gap: 4 },
+  header: {
+    backgroundColor: blues.navy,
+    paddingHorizontal: 20,
+    paddingTop: 18,
+    paddingBottom: 48,
+    gap: 6,
+  },
+  headerTitle: { color: "#fff", fontSize: 40, fontWeight: "500", letterSpacing: -1.2 },
+  headerSub: { color: blues.pale, fontSize: 15, lineHeight: 21 },
   fields: {
     marginHorizontal: 20,
+    marginTop: -32,
     marginBottom: 12,
+    shadowColor: blues.deep,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 6,
     backgroundColor: colors.card,
     borderRadius: radii.lg,
     borderWidth: 1,

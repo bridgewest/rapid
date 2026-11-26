@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SiteNav } from "../components/SiteNav";
+import { SiteFooter, SiteNav } from "../components/SiteNav";
 
 const EXCHANGE_RATE = 192;
 const TRANSFER_FEE_RATE = 0.015;
@@ -391,22 +391,7 @@ export function Landing() {
         </section>
       </main>
 
-      <footer className="rapid-footer">
-        <div>
-          <strong>Rapid</strong>
-          <p>
-            Rapid is a financial technology company, not a bank. Money transmission services may be
-            provided by licensed partners. All transfers are subject to review.
-          </p>
-        </div>
-        <nav aria-label="Footer navigation">
-          <a href="/ride">Rapid Ride</a>
-          <a href="#send">Terms</a>
-          <a href="#send">Privacy</a>
-          <a href="#help">Support</a>
-          <a href="#security">Licenses</a>
-        </nav>
-      </footer>
+      <SiteFooter disclaimer="Rapid is a financial technology company, not a bank. Money transmission services may be provided by licensed partners. All transfers are subject to review." />
     </div>
   );
 }

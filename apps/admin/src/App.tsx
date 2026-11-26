@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Landing } from "./pages/Landing";
 import { RideLanding } from "./pages/RideLanding";
@@ -13,8 +13,9 @@ import { Rides } from "./pages/Rides";
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/ride" element={<RideLanding />} />
+      <Route path="/" element={<RideLanding />} />
+      <Route path="/send" element={<Landing />} />
+      <Route path="/ride" element={<Navigate to="/" replace />} />
       <Route element={<Layout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/transactions" element={<Transactions />} />
