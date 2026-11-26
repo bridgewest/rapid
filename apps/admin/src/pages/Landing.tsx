@@ -22,7 +22,7 @@ const timelineSteps = [
   {
     step: "01",
     title: "Verify once",
-    body: "Create a Rapid profile and complete identity checks before your first transfer.",
+    body: "Create a Lizor profile and complete identity checks before your first transfer.",
   },
   {
     step: "02",
@@ -126,6 +126,9 @@ export function Landing() {
   const navigate = useNavigate();
   const prefersReducedMotion = usePrefersReducedMotion();
   useReveal(prefersReducedMotion);
+  useEffect(() => {
+    document.title = "Lizor — Send money to Liberia";
+  }, []);
 
   const [sendAmount, setSendAmount] = useState("1,000.00");
   const [delivery, setDelivery] = useState<(typeof deliveryOptions)[number]["id"]>("mobile");
@@ -199,7 +202,7 @@ export function Landing() {
             <span className="rapid-kicker">U.S. to Liberia money movement</span>
             <h1>Send money from the U.S. to Liberia with clarity and control.</h1>
             <p>
-              Rapid helps families fund transfers, airtime, and everyday support with transparent fees,
+              Lizor helps families fund transfers, airtime, and everyday support with transparent fees,
               USD to LRD estimates, and status tracking from confirmation to delivery.
             </p>
             <div className="rapid-hero__actions">
@@ -210,7 +213,7 @@ export function Landing() {
                 Track a Transfer
               </button>
             </div>
-            <dl className="rapid-proof-grid" aria-label="Rapid corridor details">
+            <dl className="rapid-proof-grid" aria-label="Lizor corridor details">
               <div>
                 <dt>Primary corridor</dt>
                 <dd>United States to Liberia</dd>
@@ -267,7 +270,7 @@ export function Landing() {
                 <strong>{formatUsd(amountUsd)}</strong>
               </div>
               <div>
-                <span>Rapid fee</span>
+                <span>Lizor fee</span>
                 <strong>{formatUsd(feeUsd)}</strong>
               </div>
               <div>
@@ -300,7 +303,7 @@ export function Landing() {
             <span className="rapid-kicker">How it works</span>
             <h2>Built for transfers that need both speed and review.</h2>
             <p>
-              Rapid keeps the sender, recipient, rate, fee, and delivery status visible at every step.
+              Lizor keeps the sender, recipient, rate, fee, and delivery status visible at every step.
             </p>
           </div>
           <div className="rapid-timeline" data-reveal>
@@ -316,9 +319,9 @@ export function Landing() {
           </div>
         </section>
 
-        <section className="rapid-image-section" aria-label="Rapid customer and team moments">
+        <section className="rapid-image-section" aria-label="Lizor customer and team moments">
           <article className="rapid-image-card rapid-image-card--large" data-reveal>
-            <img src="/images/sender-asian.png" alt="Asian American Rapid customer in the United States checking a transfer status on a phone" />
+            <img src="/images/sender-asian.png" alt="Asian American Lizor customer in the United States checking a transfer status on a phone" />
             <div>
               <span>Sender view</span>
               <h2>Start from the U.S. with the quote in front of you.</h2>
@@ -337,7 +340,7 @@ export function Landing() {
               </div>
             </article>
             <article className="rapid-image-card" data-reveal>
-              <img src="/images/team-diverse.png" alt="Asian, white, and Black Rapid operations teammates reviewing transfer support in a professional workspace" />
+              <img src="/images/team-diverse.png" alt="Asian, white, and Black Lizor operations teammates reviewing transfer support in a professional workspace" />
               <div>
                 <span>Diverse operations team</span>
                 <h3>Human review supports safer money movement.</h3>
@@ -347,9 +350,9 @@ export function Landing() {
         </section>
 
         <section className="rapid-section rapid-section--security" id="security">
-          <div className="rapid-phone" data-reveal aria-label="Rapid app preview">
+          <div className="rapid-phone" data-reveal aria-label="Lizor app preview">
             <div className="rapid-phone__bar">
-              <span>Rapid</span>
+              <span>Lizor</span>
               <span>Live</span>
             </div>
             <div className="rapid-phone__amount">L$ {formatLrd(displayedReceiveLrd)}</div>
@@ -364,7 +367,7 @@ export function Landing() {
             <span className="rapid-kicker">Security and compliance</span>
             <h2>Clear controls before money leaves the sender.</h2>
             <p>
-              Rapid is a financial technology company. Money transmission services may be provided by
+              Lizor is a financial technology company. Money transmission services may be provided by
               licensed partners, and transfers can require additional review.
             </p>
             <ul>
@@ -391,7 +394,7 @@ export function Landing() {
         </section>
       </main>
 
-      <SiteFooter disclaimer="Rapid is a financial technology company, not a bank. Money transmission services may be provided by licensed partners. All transfers are subject to review." />
+      <SiteFooter disclaimer="Lizor is a financial technology company, not a bank. Money transmission services may be provided by licensed partners. All transfers are subject to review." />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 /**
- * Rapid — Premium Fintech Palette (Trust Blue)
+ * Lizor — Premium Fintech Palette (Trust Blue)
  * Inspired by industry leaders (Remitly, Melio).
  * High-contrast, extremely trustworthy, clean surfaces.
  */

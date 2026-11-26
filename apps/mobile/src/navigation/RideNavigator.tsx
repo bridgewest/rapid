@@ -32,7 +32,7 @@ export function RideNavigator() {
         component={RideTrackingScreen}
         options={{ title: "Your trip", headerBackVisible: false, gestureEnabled: false }}
       />
-      <Stack.Screen name="DriverHub" component={DriverHubScreen} options={{ title: "Drive with Rapid" }} />
+      <Stack.Screen name="DriverHub" component={DriverHubScreen} options={{ title: "Drive with Lizor" }} />
     </Stack.Navigator>
   );
 }

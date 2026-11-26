@@ -70,7 +70,7 @@ export function Rides() {
   return (
     <>
       <header className="page-header">
-        <p className="page-header__eyebrow">Rapid Ride</p>
+        <p className="page-header__eyebrow">Lizor Ride</p>
         <h1 className="page-header__title">Live trips</h1>
         <p className="page-header__desc">Requests, trips in progress and completed rides across Greater Monrovia. Refreshes every 10 seconds.</p>
       </header>

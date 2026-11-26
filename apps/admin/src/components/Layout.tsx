@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { adminFetch } from "../lib/api";
+import { LizorMark } from "./SiteNav";
 
 function IconOverview() {
   return (
@@ -106,6 +107,10 @@ export function Layout() {
   const [apiOk, setApiOk] = useState<boolean | null>(null);
 
   useEffect(() => {
+    document.title = "Lizor — Operations Console";
+  }, []);
+
+  useEffect(() => {
     adminFetch("/health")
       .then((r) => setApiOk(r.ok))
       .catch(() => setApiOk(false));
@@ -118,9 +123,9 @@ export function Layout() {
     <div className="app-shell">
       <div className="app-accent-strip" aria-hidden="true" />
       <header className="app-header">
-        <Link className="app-header__left app-header__home" to="/" aria-label="Open Rapid landing page">
+        <Link className="app-header__left app-header__home" to="/" aria-label="Open Lizor landing page">
           <div className="app-header__brand">
-            <span className="app-header__logo">Rapid</span>
+            <span className="app-header__logo" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><LizorMark size={28} />Lizor</span>
             <span className="app-header__tagline">Operations Console</span>
           </div>
         </Link>
@@ -179,7 +184,7 @@ export function Layout() {
               Compliance &amp; AML
             </NavLink>
           </nav>
-          <div className="app-sidebar__label">Rapid Ride</div>
+          <div className="app-sidebar__label">Lizor Ride</div>
           <nav className="app-sidebar__nav" aria-label="Rides">
             <NavLink to="/rides" className={linkClass}>
               <IconCar />

@@ -58,7 +58,7 @@ const faqs = [
     q: "How is the fare calculated?",
     a: "A base fare plus distance and estimated time, depending on the ride type. You see the price before you request. If heavy traffic makes the trip much longer, the fare can rise — never more than 50% above the quote.",
   },
-  { q: "How do I pay?", a: "Cash or mobile money (Orange Money / MTN MoMo) to the driver at drop-off. In-app payment from your Rapid wallet is coming soon." },
+  { q: "How do I pay?", a: "Cash or mobile money (Orange Money / MTN MoMo) to the driver at drop-off. In-app payment from your Lizor wallet is coming soon." },
   {
     q: "Can I book a ride for my family from the U.S.?",
     a: "Yes. Choose “Booking for someone else”, enter their name and phone number, and the driver will call them at pickup. You can follow the trip from your phone.",
@@ -69,7 +69,7 @@ const faqs = [
   },
   {
     q: "How do I become a driver?",
-    a: "Download the Rapid app, open Ride → Drive with Rapid, and submit your licence and vehicle details. Bring your documents and vehicle for inspection; once approved you can go online any time.",
+    a: "Download the Lizor app, open Ride → Drive with Lizor, and submit your licence and vehicle details. Bring your documents and vehicle for inspection; once approved you can go online any time.",
   },
 ];
 
@@ -227,7 +227,7 @@ function TopDownCar() {
       <rect x="44" y="118" width="72" height="86" rx="18" fill="#e2e8f0" stroke="#cbd5e1" />
       <rect x="56" y="148" width="48" height="22" rx="6" fill="#2563eb" />
       <text x="80" y="164" textAnchor="middle" fontSize="12" fontWeight="800" fill="#fff" fontFamily="Outfit, sans-serif">
-        RAPID
+        LIZOR
       </text>
       <rect x="10" y="78" width="10" height="20" rx="4" fill="#94a3b8" />
       <rect x="140" y="78" width="10" height="20" rx="4" fill="#94a3b8" />
@@ -243,6 +243,9 @@ function TopDownCar() {
 
 export function RideLanding() {
   useReveal();
+  useEffect(() => {
+    document.title = "Lizor — Rides in Monrovia";
+  }, []);
 
   const [from, setFrom] = useState(3);
   const [to, setTo] = useState(9);
@@ -290,7 +293,7 @@ export function RideLanding() {
               <rect x="2" y="1.5" width="18" height="27" rx="3.5" stroke="currentColor" strokeWidth="2" />
               <path d="M8 24.5h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
-            Be one of the first in Monrovia. Get Rapid today.
+            Be one of the first in Monrovia. Get Lizor today.
           </span>
           <button className="btn-blue btn-blue--pill" type="button" onClick={() => go("book")}>
             Take a ride
@@ -300,7 +303,7 @@ export function RideLanding() {
 
       <main>
         {/* Hero */}
-        <section className="rr-hero" aria-label="Rapid Ride">
+        <section className="rr-hero" aria-label="Lizor Ride">
           <HeroScene />
           <div className="rr-hero__words">
             <h1>
@@ -320,10 +323,10 @@ export function RideLanding() {
         {/* Meet + booking */}
         <section className="rr-meet" id="book">
           <div className="rr-meet__copy" data-reveal>
-            <h2 className="rr-gradient">Meet Rapid Ride</h2>
+            <h2 className="rr-gradient">Meet Lizor Ride</h2>
             <p>Monrovia's ride-hailing service with upfront fares — keke, taxi or comfort car, at your door.</p>
             <a className="rr-link" href="#get-app">
-              <ArrowCircle /> Download Rapid today
+              <ArrowCircle /> Download Lizor today
             </a>
           </div>
 
@@ -406,7 +409,7 @@ export function RideLanding() {
                 <strong>of every fare</strong>
                 <span>goes to your driver*</span>
                 <a className="rr-link rr-link--light" href="#drive">
-                  <ArrowCircle /> Drive with Rapid
+                  <ArrowCircle /> Drive with Lizor
                 </a>
               </div>
               <div className="rr-bigstat__pill" aria-hidden>
@@ -422,10 +425,10 @@ export function RideLanding() {
                   <text x="306" y="56" textAnchor="middle" fill="#bfdbfe" fontSize="11" fontFamily="Outfit, sans-serif">TX-1042 · Taxi</text>
                 </svg>
               </div>
-              <p className="rr-bigstat__foot">*Rapid keeps a 15% platform fee. Drivers keep the rest of every fare.</p>
+              <p className="rr-bigstat__foot">*Lizor keeps a 15% platform fee. Drivers keep the rest of every fare.</p>
             </div>
 
-            <h2 className="rr-dark__h" data-reveal>See how a Rapid ride works</h2>
+            <h2 className="rr-dark__h" data-reveal>See how a Lizor ride works</h2>
             <div className="rr-steps">
               {steps.map((s) => (
                 <article className="rr-step" key={s.n} data-reveal>
@@ -460,9 +463,9 @@ export function RideLanding() {
         </section>
 
         {/* Promise (blue) */}
-        <section className="rr-promise" aria-label="The Rapid promise">
+        <section className="rr-promise" aria-label="The Lizor promise">
           <div className="rr-promise__inner">
-            <p className="rr-promise__title">Why ride with Rapid</p>
+            <p className="rr-promise__title">Why ride with Lizor</p>
             <hr />
             <figure className="rr-promise__body" aria-live="polite">
               <svg width="56" height="44" viewBox="0 0 56 44" aria-hidden>
@@ -498,7 +501,7 @@ export function RideLanding() {
                 <circle cx="26" cy="4" r="4" fill="#3b82f6" />
               </svg>
             </span>
-            <p>Get the latest on Rapid Ride, new neighbourhoods, and where we're headed next.</p>
+            <p>Get the latest on Lizor Ride, new neighbourhoods, and where we're headed next.</p>
             <button className="btn-blue btn-blue--square" type="button" onClick={() => go("get-app")}>
               Get the app
             </button>
@@ -514,7 +517,7 @@ export function RideLanding() {
           <div className="rr-drivers__copy" data-reveal>
             <h2 className="rr-h2">Meet the people behind every ride</h2>
             <p>
-              Rapid drivers are Monrovia's own — keke riders, taxi drivers and car owners who know every junction. Go
+              Lizor drivers are Monrovia's own — keke riders, taxi drivers and car owners who know every junction. Go
               online with one tap, accept the trips you want, and keep 85% of every fare.
             </p>
             <ul className="ride-check">
@@ -524,11 +527,11 @@ export function RideLanding() {
               <li>Android or iPhone smartphone</li>
             </ul>
             <a className="rr-link" href="#get-app">
-              <ArrowCircle /> Apply to drive with Rapid
+              <ArrowCircle /> Apply to drive with Lizor
             </a>
           </div>
           <div className="rr-drivers__vertical" aria-hidden>
-            <span>Rapid</span>
+            <span>Lizor</span>
             <span>Driver</span>
           </div>
         </section>
@@ -554,21 +557,21 @@ export function RideLanding() {
             <div className="ride-earn__result">
               <span>You could earn</span>
               <strong>{formatLrdWhole(weekly)}</strong>
-              <small>per week, after Rapid's 15% fee</small>
+              <small>per week, after Lizor's 15% fee</small>
             </div>
             <p className="ride-earn__note">Illustrative: average trip ≈ {formatLrdWhole(avgTrip)}. Actual earnings depend on demand, hours and fuel costs.</p>
           </div>
         </section>
 
         {/* Dark stats with bars */}
-        <section className="rr-rules" aria-label="How Rapid works for riders and drivers">
+        <section className="rr-rules" aria-label="How Lizor works for riders and drivers">
           <div className="rr-rules__inner">
             <div className="rr-rules__top" data-reveal>
               <div><strong>L$ 150</strong><span>lowest fare — a short keke hop</span></div>
               <div><strong>3</strong><span>ways to ride: Keke, Taxi, Comfort</span></div>
               <div><strong>0</strong><span>haggling at the roadside</span></div>
             </div>
-            <h2 data-reveal>Every Rapid ride is built on three rules:</h2>
+            <h2 data-reveal>Every Lizor ride is built on three rules:</h2>
             <div className="rr-rules__bars">
               {rules.map((r) => (
                 <div className="rr-rule" key={r.title} data-reveal>
@@ -592,7 +595,7 @@ export function RideLanding() {
             <div className="rr-safety__copy" data-reveal>
               <h2>Our commitment to safety</h2>
               <p>
-                A ride means nothing if it isn't safe. Every Rapid driver is verified in person, every pickup is
+                A ride means nothing if it isn't safe. Every Lizor driver is verified in person, every pickup is
                 confirmed with a PIN, and every trip can be shared with the people who care about you.
               </p>
               <ul>
@@ -658,7 +661,7 @@ export function RideLanding() {
         <section className="rr-getapp" id="get-app" data-reveal>
           <div>
             <h2>Your next ride is a tap away.</h2>
-            <p>Rapid Ride is in the Rapid app — the same app you use to send money to Liberia.</p>
+            <p>Lizor Ride is in the Lizor app — the same app you use to send money to Liberia.</p>
           </div>
           <div className="ride-getapp__badges">
             <span className="ride-badge"><small>Coming soon on</small>App Store</span>
@@ -667,7 +670,7 @@ export function RideLanding() {
         </section>
       </main>
 
-      <SiteFooter disclaimer="Rapid Ride connects riders with independent drivers in Greater Monrovia. Fares shown on this site are estimates. Rapid is a financial technology company, not a bank; money transmission services may be provided by licensed partners." />
+      <SiteFooter disclaimer="Lizor Ride connects riders with independent drivers in Greater Monrovia. Fares shown on this site are estimates. Lizor is a financial technology company, not a bank; money transmission services may be provided by licensed partners." />
     </div>
   );
 }

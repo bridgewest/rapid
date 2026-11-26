@@ -1997,3 +1997,8 @@ body {
 .rr-safety__photo img { transform-origin: 10% 76%; }
 .rr-drivers { align-items: start; }
 .rr-drivers__vertical { font-size: clamp(56px, 6.2vw, 92px); align-self: start; }
+
+/* Lizor brand */
+.rapid-wordmark { display: inline-flex; align-items: center; gap: 8px; letter-spacing: 0.28em; }
+.rapid-wordmark span { color: #0b1020; }
+.site-footer__brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.5rem; letter-spacing: 0.28em; color: #0b1020; }

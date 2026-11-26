@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 type Product = "ride" | "send";
@@ -6,7 +7,7 @@ export const RIDE_PATH = "/";
 export const SEND_PATH = "/send";
 
 /**
- * Public site header. Two top-level product tabs — Ride first (home), then Send Money.
+ * Public site header. Lizor public site header. Two top-level product tabs — Ride first (home), then Send Money.
  */
 export function SiteNav({
   active,
@@ -24,10 +25,11 @@ export function SiteNav({
     <header className="rapid-nav">
       <div className="rapid-nav__inner">
         <div className="rapid-nav__left">
-          <Link className="rapid-wordmark" to={RIDE_PATH} onClick={top} aria-label="Rapid home">
-            RAPID
+          <Link className="rapid-wordmark" to={RIDE_PATH} onClick={top} aria-label="Lizor home">
+            <LizorMark size={34} />
+            <span>LIZOR</span>
           </Link>
-          <nav className="rapid-product-tabs" aria-label="Rapid products">
+          <nav className="rapid-product-tabs" aria-label="Lizor products">
             <Link
               to={RIDE_PATH}
               className={"rapid-product-tab" + (active === "ride" ? " is-active" : "")}
@@ -89,18 +91,50 @@ export function ArrowCircle() {
   );
 }
 
-export function RapidMark({ size = 44 }: { size?: number }) {
+let markCount = 0;
+/** Lizor gecko mark. */
+export function LizorMark({ size = 44 }: { size?: number }) {
+  const [uid] = useState(() => ++markCount);
   return (
-    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden>
-      <defs>
-        <linearGradient id="rm-g" x1="0" y1="0" x2="48" y2="48">
-          <stop offset="0" stopColor="#1d4ed8" />
-          <stop offset="0.55" stopColor="#3b82f6" />
-          <stop offset="1" stopColor="#7dd3fc" />
-        </linearGradient>
-      </defs>
-      <path d="M8 38 L20 10 M20 10 L30 26 M30 26 L40 10" stroke="url(#rm-g)" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden>
+  <defs>
+    <linearGradient id={`lz-${uid}`} x1="44" y1="4" x2="22" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stopColor="#38bdf8"/>
+      <stop offset="0.45" stopColor="#3b82f6"/>
+      <stop offset="1" stopColor="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <g stroke={`url(#lz-${uid})`} strokeLinecap="round" strokeLinejoin="round">
+    {/* bent legs (running gait) */}
+    <path d="M35 19 L26.5 15.5 L24 8.5" strokeWidth="3.4"/>
+    <path d="M38.5 23 L46.5 25 L50 18.5" strokeWidth="3.4"/>
+    <path d="M30.5 34.5 L22 35 L17.5 41" strokeWidth="3.4"/>
+    <path d="M33.5 38 L40 43.5 L39.5 51" strokeWidth="3.4"/>
+    {/* torso */}
+    <path d="M38.5 15 C36 23 33 30 31.5 38" strokeWidth="10.5"/>
+    {/* tapering tail */}
+    <path d="M31.5 38 C30 43 28 46 25 49" strokeWidth="6.5"/>
+    <path d="M25 49 C21.5 53 22 58.5 27.5 59.5" strokeWidth="4.4"/>
+    <path d="M27.5 59.5 C32 60.2 35 57.5 34 54.5" strokeWidth="2.6"/>
+  </g>
+  <g fill={`url(#lz-${uid})`}>
+    {/* splayed toes */}
+    <circle cx="23.6" cy="7.4" r="2"/><circle cx="50.6" cy="17.4" r="2"/>
+    <circle cx="16.8" cy="42" r="2"/><circle cx="39.4" cy="52.2" r="2"/>
+    {/* head: broad gecko head, turned up-right */}
+    <ellipse cx="40.4" cy="9.8" rx="5.6" ry="7" transform="rotate(17 40.4 9.8)"/>
+    <circle cx="37.2" cy="7" r="2.3"/>
+    <circle cx="43.9" cy="9" r="2.3"/>
+  </g>
+  {/* eyes + dorsal spots */}
+  <circle cx="37" cy="6.6" r="1.25" fill="#fff"/>
+  <circle cx="44.1" cy="8.6" r="1.25" fill="#fff"/>
+  <circle cx="36.9" cy="6.4" r="0.55" fill="#0a1630"/>
+  <circle cx="44.2" cy="8.4" r="0.55" fill="#0a1630"/>
+  <circle cx="36.6" cy="22.5" r="1.25" fill="#dbeafe"/>
+  <circle cx="34.9" cy="27.8" r="1.25" fill="#dbeafe"/>
+  <circle cx="33.4" cy="33" r="1.25" fill="#dbeafe"/>
+</svg>
   );
 }
 
@@ -108,11 +142,14 @@ export function SiteFooter({ disclaimer }: { disclaimer: string }) {
   return (
     <footer className="site-footer">
       <div className="site-footer__inner">
-        <RapidMark />
+        <div className="site-footer__brand">
+          <LizorMark size={56} />
+          <span>LIZOR</span>
+        </div>
         <div className="site-footer__grid">
-          <nav aria-label="Rapid Ride">
-            <Link to={RIDE_PATH}>Rapid Ride</Link>
-            <a href={`${RIDE_PATH}#drive`}>Drive with Rapid</a>
+          <nav aria-label="Lizor Ride">
+            <Link to={RIDE_PATH}>Lizor Ride</Link>
+            <a href={`${RIDE_PATH}#drive`}>Drive with Lizor</a>
             <a href={`${RIDE_PATH}#safety`}>Safety</a>
             <a href={`${RIDE_PATH}#faq`}>FAQ</a>
             <a href={`${RIDE_PATH}#coverage`}>Where we go</a>
@@ -125,7 +162,7 @@ export function SiteFooter({ disclaimer }: { disclaimer: string }) {
             <a href="#top">Contact Us</a>
           </nav>
           <div className="site-footer__signup">
-            <p>Get the latest on Rapid and where we're launching next.</p>
+            <p>Get the latest on Lizor and where we're launching next.</p>
             <a className="btn-blue" href={`${RIDE_PATH}#get-app`}>
               Get the app
             </a>

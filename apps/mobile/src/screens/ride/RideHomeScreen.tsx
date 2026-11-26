@@ -148,7 +148,7 @@ export function RideHomeScreen({ navigation }: Props) {
           onPress={() => ready && navigation.navigate("RideOptions", { pickup: pickup!, dropoff: dropoff! })}
         />
         <Pressable onPress={() => navigation.navigate("DriverHub")} style={{ paddingTop: 14, alignItems: "center" }}>
-          <Text style={{ color: colors.accent, fontWeight: "700" }}>Have a car or keke? Drive with Rapid →</Text>
+          <Text style={{ color: colors.accent, fontWeight: "700" }}>Have a car or keke? Drive with Lizor →</Text>
         </Pressable>
       </View>
     </View>

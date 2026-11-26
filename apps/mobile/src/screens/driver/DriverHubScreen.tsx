@@ -50,10 +50,10 @@ export function DriverHubScreen() {
     const copy = {
       PENDING: {
         title: "Application under review",
-        body: "Our team will verify your licence and vehicle, usually within 2 business days. Bring your original documents to the Rapid office for inspection.",
+        body: "Our team will verify your licence and vehicle, usually within 2 business days. Bring your original documents to the Lizor office for inspection.",
       },
       REJECTED: { title: "Application not approved", body: profile.reviewerNotes ?? "Please update your details and re-apply." },
-      SUSPENDED: { title: "Account suspended", body: profile.reviewerNotes ?? "Contact Rapid driver support." },
+      SUSPENDED: { title: "Account suspended", body: profile.reviewerNotes ?? "Contact Lizor driver support." },
     }[profile.status];
     return (
       <ScrollView style={styles.root} contentContainerStyle={{ padding: 20, gap: 14 }}>
@@ -113,7 +113,7 @@ function ApplyForm({ existing, onDone }: { existing: DriverProfile | null; onDon
 
   return (
     <ScrollView style={styles.root} contentContainerStyle={{ padding: 20, gap: 10, paddingBottom: 40 }} keyboardShouldPersistTaps="handled">
-      <Text style={ui.h1}>Drive with Rapid</Text>
+      <Text style={ui.h1}>Drive with Lizor</Text>
       <Text style={[ui.muted, { marginBottom: 8 }]}>
         Earn on your own schedule. Keep 85% of every fare. You'll need a valid Liberian driver's licence and a roadworthy vehicle.
       </Text>
@@ -316,7 +316,7 @@ function DriverDashboard({ profile, reload }: { profile: DriverProfile; reload: 
       {online && gpsDenied && (
         <Card>
           <Text style={ui.h2}>Location is off</Text>
-          <Text style={[ui.muted, { marginBottom: 10 }]}>Turn on location for Rapid, or pick the area you're waiting in:</Text>
+          <Text style={[ui.muted, { marginBottom: 10 }]}>Turn on location for Lizor, or pick the area you're waiting in:</Text>
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
             {MONROVIA_PLACES.slice(0, 12).map((p) => (
               <Pressable key={p.label} style={styles.areaChip} onPress={() => setManualArea(p.lat, p.lng)}>

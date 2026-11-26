@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Rapid",
+    "name": "Lizor",
     "slug": "rapid",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,7 +13,7 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.rapid.app",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Rapid uses your location to find nearby drivers and set your pickup point."
+        "NSLocationWhenInUseUsageDescription": "Lizor uses your location to find nearby drivers and set your pickup point."
       }
     },
     "android": {
@@ -21,10 +21,15 @@
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION"
-      ]
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0a1630"
+      }
     },
     "web": {
-      "bundler": "metro"
+      "bundler": "metro",
+      "favicon": "./assets/lizor-mark.png"
     },
     "extra": {
       "apiUrl": "http://localhost:4000"
@@ -33,9 +38,15 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "Rapid uses your location to find nearby drivers and set your pickup point."
+          "locationWhenInUsePermission": "Lizor uses your location to find nearby drivers and set your pickup point."
         }
       ]
-    ]
+    ],
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/lizor-mark.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0a1630"
+    }
   }
 }

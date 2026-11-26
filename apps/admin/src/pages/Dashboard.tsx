@@ -21,7 +21,7 @@ export function Dashboard() {
         <p className="page-header__eyebrow">Operations</p>
         <h1 className="page-header__title">Overview</h1>
         <p className="page-header__desc">
-          Monitor Rapid platform health, money-movement activity, and compliance queues. This console is
+          Monitor Lizor platform health, money-movement activity, and compliance queues. This console is
           intended for authorized operations and compliance staff only.
         </p>
       </header>

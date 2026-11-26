@@ -83,7 +83,7 @@ export function RideTrackingScreen({ navigation, route }: Props) {
     const d = ride.driver;
     void Share.share({
       message:
-        `I'm on a Rapid ride: ${ride.pickupLabel} → ${ride.dropoffLabel}.` +
+        `I'm on a Lizor ride: ${ride.pickupLabel} → ${ride.dropoffLabel}.` +
         (d ? ` Driver ${d.fullName}, ${d.vehicleColor} ${d.vehicleMake} ${d.vehicleModel}, plate ${d.plateNumber}.` : ""),
     });
   };

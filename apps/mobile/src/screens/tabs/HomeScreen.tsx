@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Pressable, Image } from "react-native";
+
+const lizorMark = require("../../../assets/lizor-mark.png");
 import { useNavigation } from "@react-navigation/native";
 import type { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { blues, colors, radii } from "../../theme";
@@ -36,6 +38,7 @@ export function HomeScreen() {
       {/* Hero */}
       <Pressable style={styles.hero} onPress={ride} accessibilityRole="button" accessibilityLabel="Book a ride">
         <View style={styles.heroGlow} />
+        <Image source={lizorMark} style={styles.heroMark} accessibilityIgnoresInvertColors />
         <View style={styles.heroRoad}>
           {[0, 1, 2, 3, 4].map((i) => (
             <View key={i} style={styles.heroDash} />
@@ -53,7 +56,7 @@ export function HomeScreen() {
       {/* Meet */}
       <View style={styles.section}>
         <Text style={styles.meet}>
-          Meet <Text style={{ color: blues.sky }}>Rapid</Text>
+          Meet <Text style={{ color: blues.sky }}>Lizor</Text>
         </Text>
         <Text style={styles.meetSub}>Rides around Monrovia and money to Liberia — in one app.</Text>
         <View style={styles.features}>
@@ -68,18 +71,18 @@ export function HomeScreen() {
         <Text style={styles.bigKeep}>drivers keep</Text>
         <Text style={styles.bigNum}>85%</Text>
         <Text style={styles.bigText}>of every fare*</Text>
-        <Text style={styles.bigFoot}>*Rapid keeps a 15% platform fee.</Text>
+        <Text style={styles.bigFoot}>*Lizor keeps a 15% platform fee.</Text>
         <Pressable style={styles.circleLink} onPress={ride}>
           <View style={styles.circle}>
             <Text style={{ color: "#fff", fontSize: 16 }}>→</Text>
           </View>
-          <Text style={styles.circleLinkText}>Drive with Rapid</Text>
+          <Text style={styles.circleLinkText}>Drive with Lizor</Text>
         </Pressable>
       </View>
 
       {/* Promise */}
       <View style={styles.promise}>
-        <Text style={styles.promiseTitle}>Why ride with Rapid</Text>
+        <Text style={styles.promiseTitle}>Why ride with Lizor</Text>
         <View style={styles.promiseRule} />
         <Text style={styles.quoteMark}>“</Text>
         <Text style={styles.promiseQuote}>{PROMISES[promise].quote}</Text>
@@ -177,6 +180,7 @@ const styles = StyleSheet.create({
     backgroundColor: blues.deep,
     opacity: 0.6,
   },
+  heroMark: { position: "absolute", right: 14, top: 14, width: 92, height: 92, opacity: 0.95 },
   heroRoad: { position: "absolute", left: 0, right: 0, top: 120, flexDirection: "row", justifyContent: "space-around" },
   heroDash: { width: 36, height: 4, borderRadius: 2, backgroundColor: blues.primary, opacity: 0.7 },
   heroWord: { color: "#fff", fontSize: 64, fontWeight: "500", letterSpacing: -2, lineHeight: 66 },

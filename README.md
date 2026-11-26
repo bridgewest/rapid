@@ -1,4 +1,6 @@
-# Rapid
+# Lizor
+
+> Brand renamed from **Rapid** to **Lizor** (gecko mark: `apps/admin/public/brand/lizor-mark.svg`, app icon: `apps/mobile/assets/icon.png`). Internal package names, CSS class prefixes (`rapid-*`) and storage keys still use `rapid` and were intentionally left unchanged.
 
 **Project root (canonical):** `~/Documents/rapid`
 
@@ -77,7 +79,7 @@ During `vercel link`, pick your team and project (e.g. `rapid`). Set **`VITE_API
 
 ### If production still looks old (stale bundle)
 
-Quick check: the browser tab title should be **Rapid — Operations Console** (see [apps/admin/index.html](apps/admin/index.html)). If you still see **Rapid Admin** or markdown text like “Wire your admin JWT”, Production is an old deploy.
+Quick check: the browser tab title should start with **Lizor** (see [apps/admin/index.html](apps/admin/index.html)). If you still see **Rapid Admin** or markdown text like “Wire your admin JWT”, Production is an old deploy.
 
 1. **Vercel → Project → Settings → Domains** — confirm `rapid.vercel.app` is attached to this project (not another team/project).
 2. **Settings → Git** — connect **bridgewest/rapid**, production branch **main**.
@@ -86,7 +88,7 @@ Quick check: the browser tab title should be **Rapid — Operations Console** (s
 5. **Deployments** — open the latest **Production** row: confirm it shows a recent **Git** commit (not only “Redeploy” of an old CLI build). Open the build log and fix errors until exit code **0**.
 6. After a good deploy, **View page source** and look for `<meta name="rapid-build" content="…">` — it should match the short Git SHA of that deployment. The sidebar also shows **Build** with the same id.
 
-## Rapid Ride (Monrovia ride-hailing)
+## Lizor Ride (Monrovia ride-hailing)
 
 Uber-style rides for Liberia: **Keke**, **Taxi**, **Comfort** — fares in LRD, pay cash / mobile money (wallet later).
 

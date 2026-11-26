@@ -72,7 +72,7 @@ export function Drivers() {
   return (
     <>
       <header className="page-header">
-        <p className="page-header__eyebrow">Rapid Ride</p>
+        <p className="page-header__eyebrow">Lizor Ride</p>
         <h1 className="page-header__title">Driver onboarding</h1>
         <p className="page-header__desc">
           Review driver applications. Approve only after the licence, national ID and vehicle (plate, roadworthiness,

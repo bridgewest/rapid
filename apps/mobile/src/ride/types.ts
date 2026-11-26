@@ -99,7 +99,7 @@ export const CLASS_INFO: Record<VehicleClass, { emoji: string; blurb: string }> 
 export const PAYMENT_LABEL: Record<PaymentMethod, string> = {
   CASH: "Cash",
   MOBILE_MONEY: "Mobile money",
-  WALLET: "Rapid wallet",
+  WALLET: "Lizor wallet",
 };
 
 export function lrd(n: number): string {

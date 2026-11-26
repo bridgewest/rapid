@@ -121,7 +121,7 @@ export function RideOptionsScreen({ navigation, route }: Props) {
           <Text style={[ui.muted, { marginTop: 6 }]}>
             {payment === "MOBILE_MONEY"
               ? "You'll pay the driver by Orange Money or MTN MoMo at drop-off."
-              : "Rapid wallet payments are coming soon — the driver will collect cash for now."}
+              : "Lizor wallet payments are coming soon — the driver will collect cash for now."}
           </Text>
         )}
 
